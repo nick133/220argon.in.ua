@@ -41,6 +41,9 @@ class Services extends Component {
   }
 
   componentDidMount() {
+    this.scrollHeight = -2 - window.getComputedStyle(
+      document.getElementsByClassName(Com.headerId)[0]).height.replace('px', '');
+
     this.reorderItems(this.props.openId);
   }
 
@@ -71,8 +74,7 @@ class Services extends Component {
       this.setState({ openedItemDOM: undefined });
     else {
       window.location.href = '#' + openId;
-      window.scrollBy(0, -window.getComputedStyle(
-        document.getElementsByClassName(Com.headerId)[0]).height.replace('px', ''));
+      window.scrollBy(0, this.scrollHeight);
     }
   }
 
