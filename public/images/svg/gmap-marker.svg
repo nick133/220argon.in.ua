@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="1807"
+   height="1807"
+   version="1.1"
+   id="svg10"
+   sodipodi:docname="gmap-marker.svg"
+   inkscape:version="0.92.0 r15299">
+  <metadata
+     id="metadata16">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>map pin yellow</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs14" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1679"
+     inkscape:window-height="975"
+     id="namedview12"
+     showgrid="false"
+     inkscape:zoom="0.11384467"
+     inkscape:cx="-350.56835"
+     inkscape:cy="1017.9259"
+     inkscape:window-x="0"
+     inkscape:window-y="28"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="g8"
+     fit-margin-top="0"
+     fit-margin-left="333"
+     fit-margin-right="333"
+     fit-margin-bottom="0" />
+  <title
+     id="title2">map pin yellow</title>
+  <g
+     id="g8"
+     transform="translate(-365.71454,-247.42621)">
+    <title
+       id="title4">Layer 1</title>
+    <g
+       id="g4495"
+       transform="translate(28.714561)">
+      <path
+         style="clip-rule:evenodd;fill:#ff0000;fill-rule:evenodd;stroke:#000000;stroke-width:37;stroke-miterlimit:10"
+         inkscape:connector-curvature="0"
+         id="svg_2"
+         stroke-miterlimit="10"
+         d="M 1241.8947,1959.63 C 1203.1248,1769.33 1134.7788,1610.96 1051.9918,1464.1899 990.58479,1355.3199 919.44777,1254.83 853.62776,1149.25 831.65578,1114.01 812.6938,1076.77 791.58077,1040.2 749.36476,967.06 715.1368,882.26202 717.31178,772.26501 c 2.125,-107.47302 33.20801,-193.68402 78.03003,-264.17202 73.719,-115.935 197.20099,-210.98899 362.88399,-235.969 135.469,-20.42399 262.479,14.082 352.539,66.74802 73.6,43.03799 130.6,100.52698 173.92,168.28 45.2199,70.71597 76.36,154.25998 78.9699,263.23196 1.3401,55.83002 -7.7999,107.53204 -20.6799,150.41803 -13.03,43.409 -33.99,79.698 -52.64,118.458 -36.41,75.66 -82.0501,144.98 -127.86,214.34 -136.4401,206.61 -264.5,417.31 -320.5801,706.03 z" />
+      <circle
+         style="clip-rule:evenodd;fill:#000000;fill-rule:evenodd"
+         id="svg_4"
+         cx="1240.5"
+         cy="740.047"
+         r="183.332" />
+    </g>
+  </g>
+</svg>
