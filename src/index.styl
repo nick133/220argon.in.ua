@@ -79,7 +79,7 @@ new_pricetag_h = 100px
   font-style normal
 
 .locate-ico__svg
-  width  footer_height
+  width  round(footer_height * 0.8)
   height @width
 
 .addr-link
@@ -128,7 +128,7 @@ new_pricetag_h = 100px
     padding-left 4px
     font-size 20px
 
-// 640px
+// 600px
 @media screen and (min-width: md_grid_width)
   .find-us
     right pricetag_width + 48px
@@ -141,13 +141,14 @@ new_pricetag_h = 100px
     order 1
 
   .addr-text
+    padding-left 6px
     font-size 24px
 
   .locate-ico__svg
     width  footer_height
     height @width
 
-// 768px
+// 720px
 @media screen and (min-width: lg_grid_width)
   .find-us
     right pricetag_width   + 80px
@@ -156,7 +157,7 @@ new_pricetag_h = 100px
   .phone-box
     font-size 32px
 
-// 960px
+// 800px
 @media screen and (min-width: xl_grid_width)
   .find-us
     left argon_logo_width + 65px
@@ -205,6 +206,10 @@ new_pricetag_h = 100px
   font-style normal
   font-weight bold
 
+@media screen and (min-width: sm_grid_width)
+  .map
+    padding-bottom 0
+  
 @media screen and (min-width: lg_grid_width)
   .map__header
     padding 24px 0 6px 0
