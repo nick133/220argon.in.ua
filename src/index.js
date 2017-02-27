@@ -14,16 +14,18 @@ Axios.get(document.getElementById('host-data').src)
   .then(function (response) {
     let uSearch = Host.parseUrlSearch();
 
-    Inferno.render(<Advantages data={ response.data.blocks.advantages } />,
-      document.getElementById('com-advantages'));
+    [ [ 'com-advantages', <Advantages data={ response.data.blocks.advantages } /> ],
 
-    Inferno.render(<Services
-      openId={ (uSearch.go !== undefined && uSearch.go.length > 1) ? uSearch.go : '' }
-      data={ response.data.blocks.services }
-    />, document.getElementById('com-services'));
+      [ 'com-services', <Services
+          openId={ (uSearch.go !== undefined && uSearch.go.length > 1) ? uSearch.go : '' }
+          data={ response.data.blocks.services }
+        /> ],
 
-    Inferno.render(<Related data={ response.data.blocks.related } />,
-      document.getElementById('com-related'));
+      [ 'com-related', <Related data={ response.data.blocks.related } /> ],
+
+    ].forEach(function(component) {
+      Inferno.render(component[1], document.getElementById(component[0]));
+    });
   })
   .catch(function (error) {
     console.log(error);
