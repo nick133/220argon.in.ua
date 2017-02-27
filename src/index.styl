@@ -1,0 +1,219 @@
+
+@require "hostlib.styl"
+
+/*------------------------------*\
+  #COMMON
+\*------------------------------*/
+
+body, html, img, address, table, tr, td, th, div, p, ul, li,
+h1, h2, h3, h4, h5, h6
+  margin 0
+  border 0 none
+  padding 0
+
+.main
+  color text_color
+  background-color #fff
+  font-style normal
+  font-family "Roboto", "Open Sans", "lucida grande", "Segoe UI", arial, verdana, "lucida sans unicode", tahoma, sans-serif
+  text-align left
+
+body, html,
+.main-header,
+.find-us,
+.welcome,
+.map
+  width 100%
+
+.main-header,
+.find-us
+  z-index 1
+  position fixed
+  background color_grey
+
+
+/*------------------------------*\
+  #HEADER
+\*------------------------------*/
+
+.main-header
+  top 0
+  height header_height
+  text-align center
+  
+.logo
+  z-index 2
+  position fixed
+  top  0
+  left 0
+
+  width  image_width( path_pub + image_argon_logo)
+  height argon_logo_height
+
+  background-image: url(image_argon_logo)
+  background-repeat no-repeat
+  background-size contain
+  cursor pointer
+
+.price-tag
+  z-index 2
+  position fixed
+  top   0
+  right 0
+
+new_pricetag_h = 100px
+.price-tag__svg
+  height 72px
+  margin-top -2px
+  @media screen and (min-width: md_grid_width)
+    height new_pricetag_h
+
+
+/*------------------------------*\
+  #FIND-US
+\*------------------------------*/
+
+.find-us
+  bottom 0
+  height footer_height
+  font-style normal
+
+.locate-ico__svg
+  width  footer_height
+  height @width
+
+.addr-link
+  color #333
+  text-decoration none
+  &:hover
+    color color_red
+
+.cell-locate-icon
+  width footer_height
+
+.addr-text
+  font-size 24px
+
+.phone-box
+  padding-right 4px
+  font-size 24px
+  font-weight bold
+
+// 480px
+@media screen and (min-width: sm_grid_width)
+  .find-us
+    top 0
+    bottom auto
+    left  argon_logo_width + 10px
+    right pricetag_width + 10px
+    width auto
+    height header_height
+    background none
+
+  .addr-text
+    font-size 17px
+
+  .cell-locate-icon
+    width 24px
+
+  .locate-ico__svg
+    width  24px
+    height @width
+
+  .locate-box
+    order 2
+
+  .phone-box
+    order 1
+    padding-left 4px
+    font-size 20px
+
+// 640px
+@media screen and (min-width: md_grid_width)
+  .find-us
+    right pricetag_width + 48px
+
+  .phone-box
+    font-size 26px
+    padding 0
+
+  .locate-box
+    order 1
+
+  .addr-text
+    font-size 24px
+
+  .locate-ico__svg
+    width  footer_height
+    height @width
+
+// 768px
+@media screen and (min-width: lg_grid_width)
+  .find-us
+    right pricetag_width   + 80px
+    left  argon_logo_width + 30px
+
+  .phone-box
+    font-size 32px
+
+// 960px
+@media screen and (min-width: xl_grid_width)
+  .find-us
+    left argon_logo_width + 65px
+
+
+/*------------------------------*\
+  #WELCOME
+\*------------------------------*/
+
+.welcome
+  margin-top header_height
+  text-align center
+
+.welcome-title
+  padding-top 8px
+  line-height 56px
+  font-size 46px
+  font-weight 900
+  color color_red
+  text-transform uppercase
+  text-shadow 2px 2px 4px #aaa
+
+
+/*------------------------------*\
+  #GOOGLE-MAP
+\*------------------------------*/
+
+.map
+  text-align center
+  padding 16px 0 footer_height 0
+
+.map__header
+  padding-bottom 6px
+  font-size 20px
+
+.map__google
+  width 100%
+  height 280px
+  background-color color_grey
+
+.map__warn
+  padding 6px 0
+  color color_red
+  font-size 18px
+  font-family "Roboto Condensed"
+  font-style normal
+  font-weight bold
+
+@media screen and (min-width: lg_grid_width)
+  .map__header
+    padding 24px 0 6px 0
+    font-size 24px
+
+  .map__header-is
+    display inline-block
+
+  .map__warn
+    padding 12px 0
+    font-size 24px
+    font-family Roboto

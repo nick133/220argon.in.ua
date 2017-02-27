@@ -1,0 +1,25 @@
+@require "hostdefs/hostdefs.styl"
+
+/*------------------------------*\
+  #HOST-VARIABLES/FUNCTIONS
+\*------------------------------*/
+
+
+path_pub = '../public'
+
+header_height = 54px
+footer_height = 28px
+
+image_pricetag    = '/images/svg/price-tag.svg'
+pricetag_height   = image_height(path_pub + image_pricetag)
+pricetag_width    = image_width(path_pub + image_pricetag)
+
+image_argon_logo  = '/images/argon-logo.png'
+argon_logo_height = image_height(path_pub + image_argon_logo)
+argon_logo_width  = image_width(path_pub + image_argon_logo)
+
+image_width(img)
+  return image-size(img)[0]
+  
+image_height(img)
+  return image-size(img)[1]
