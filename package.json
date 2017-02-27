@@ -1,0 +1,24 @@
+{
+  "name": "220argon.in.ua-inferno",
+  "version": "0.1.0",
+  "private": true,
+  "devDependencies": {
+    "inferno-scripts": "0.13.2"
+  },
+  "dependencies": {
+    "axios": "github:mzabriskie/axios",
+    "babel-plugin-inferno": "^1.9.0",
+    "gulp": "^3.9.1",
+    "gulp-plumber": "^1.1.0",
+    "gulp-stylus": "^2.6.0",
+    "inferno": "^1.3.0-rc.3",
+    "inferno-component": "^1.3.0-rc.3",
+    "node-glob": "^1.2.0"
+  },
+  "scripts": {
+    "start": "inferno-scripts start",
+    "build": "inferno-scripts build",
+    "test": "inferno-scripts test --env=jsdom",
+    "eject": "inferno-scripts eject"
+  }
+}
