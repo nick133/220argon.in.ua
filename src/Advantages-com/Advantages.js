@@ -7,7 +7,7 @@ import './Advantages.css';
 class Advantages extends Component {
   render() {
     return (
-      <div class="advantages  /  grid  full-width  items-center  text-center">
+      <div class="advantages  /  grid  full-width  items-stretch  text-center">
       {
 
         this.props.data.items.map(function(item, n) {
@@ -18,17 +18,17 @@ class Advantages extends Component {
 
           if ((n % 2) === 0) {
             // Left column
-            parityClassIcon = 'col-2';
-            parityClassItem = 'col-10  text-left';
+            parityClassIcon = 'col-2  col-md-3  col-sm-order-2';
+            parityClassItem = 'col-10  col-md-9  col-sm-order-1  text-left  sm-text-right';
           } else {
             // Right column
-            parityClassIcon = 'col-2  col-sm-order-2';
-            parityClassItem = 'col-10  col-sm-order-1  text-left sm-text-right';
+            parityClassIcon = 'col-2  col-md-3';
+            parityClassItem = 'col-10  col-md-9  text-left';
           }
 
           return (
             <div className="col-12  col-sm-6" key={uid}>
-              <div className="grid  full-width  items-center">
+              <div className="grid  full-width  items-start">
 
                 <div className={parityClassIcon}>
                   <div className="advntg-ico">
