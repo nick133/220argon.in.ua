@@ -1,0 +1,132 @@
+@require "../hostlib"
+
+/*------------------------------*\
+  #SERVICES
+\*------------------------------*/
+
+.com-services
+  width 100%
+  padding 16px 0
+
+  arrow_height = 36px // must be even!
+  arrow_width  = round(arrow_height * 0.4)
+
+  .services-item
+    width auto
+    padding 0 8px
+    list-style none
+
+  .aaa
+
+    height 90%
+    margin 0 2px
+    border-radius 4px
+    border 1px solid #666
+    background-image: url(/images/service-latun.jpg)
+    background-size: contain
+    background-repeat: no-repeat
+    background-position: center center
+
+  /*---- Banner image ----*/
+
+  .services-banner
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center bottom;
+
+  /*---- Item header container ----*/
+
+  .services-item__header
+    &:hover
+      cursor pointer
+    &:hover .services-item__title-is
+      background-color darken(color_grey, 3%)
+      color color_red
+    &:hover .services-item__arrow-is
+      border-left-color darken(color_grey, 3%)
+
+  .services-item__title--opened
+    color color_red
+
+  .services-item__title
+  .services-item__arrow
+    padding 2px 0
+
+  .services-item__arrow
+    width arrow_width
+
+  .services-item__arrow-is
+    width  0
+    height 0
+    border-top (arrow_height / 2) solid transparent
+    border-left arrow_width solid color_grey
+    border-bottom (arrow_height / 2) solid transparent
+
+  /*---- Item title ----*/
+
+  .services-item__title-is
+    height arrow_height
+    padding-left 12px
+    border-radius 3px 0 0 3px
+    background color_grey
+    font-size 26px
+    line-height 36px
+    font-weight 500
+    text-align left
+    text-transform uppercase
+
+  /*---- Item content ----*/
+
+  .services-item__content
+    display none
+    z-index -1
+    padding 8px 0 24px 0
+    text-align center
+
+  .services-item__content-1 h4, .services-item__content-1 h4
+    font-size 22px
+    white-space normal
+
+  .services-item__content-1 ul, .services-item__content-2 ul
+    padding 4px 0 8px 18px
+    text-align left
+    list-style square outside
+    font-size 18px
+
+  .services-item__banner
+    width 96%
+
+  .services-item__content-2
+    text-align left
+
+    /*---- Responsiveness ----*/
+
+  @media screen and (max-width: sm_grid_width-10)
+   .services-banner
+     display none
+
+  @media screen and (min-width: md_grid_width)
+    .services-item__title-is
+      padding-left 32px
+
+  @media screen and (min-width: lg_grid_width)
+    new_arrow_height = 42px // must be even!
+    new_arrow_width  = round(new_arrow_height * 0.4)
+
+    .services-item__arrow
+      width new_arrow_width
+
+    .services-item__arrow-is
+      border-top (new_arrow_height / 2) solid transparent
+      border-left new_arrow_width solid color_grey
+      border-bottom (new_arrow_height / 2) solid transparent
+
+    .services-item__title-is
+      height new_arrow_height
+      line-height 43px
+      font-size 32px
+
+  @media screen and (min-width: xl_grid_width)
+    .services--rest
+      width 85%
+
