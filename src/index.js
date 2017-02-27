@@ -26,6 +26,18 @@ Axios.get(document.getElementById('host-data').src)
     ].forEach(function(component) {
       Inferno.render(component[1], document.getElementById(component[0]));
     });
+
+
+    let locateIcon = document.getElementById('locate-icon');
+    let prevLocateClass = locateIcon.className;
+
+    let animateIcon = function(t) {
+      locateIcon.className += '  animated  bounce';
+      setTimeout(function() { locateIcon.className = prevLocateClass; }, 4000);
+    };
+
+    animateIcon();
+    setInterval(animateIcon, 10000);
   })
   .catch(function (error) {
     console.log(error);
