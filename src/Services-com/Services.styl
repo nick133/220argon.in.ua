@@ -15,7 +15,6 @@ arrow_width($h)
 
   .services-item
     width auto
-    padding 0 8px
     list-style none
 
   .aaa
@@ -38,7 +37,7 @@ arrow_width($h)
   /*---- Item header / title ----*/
 
   .services-item__header
-    margin-top 5px
+    margin 5px 8px 0 8px
     padding-left 12px
     width auto
     height $arrow_height
@@ -57,7 +56,7 @@ arrow_width($h)
 
   .services-item__header--close
     border-radius 3px 0 0 3px
-    margin-right arrow_width($arrow_height)
+    margin-right (arrow_width($arrow_height) + 8)
 
   // ====> Arrow
   .services-item__header--close:before
@@ -85,25 +84,39 @@ arrow_width($h)
   /*---- Item content ----*/
 
   .services-item__content
-    padding 8px 0 24px 0
-    text-align center
-    border 1px solid color_grey
+    display none
+    width auto
+    padding 16px 10px 8px 10px
+    margin-bottom 24px
+    text-align left
+    font-size 18px
+    border-bottom 1px dashed #cdcdcd
 
-  .services-item__content-1 h4, .services-item__content-1 h4
+  .services-item__content h4, .services-item__content h4
     font-size 22px
+    padding-left 25px
     white-space normal
 
-  .services-item__content-1 ul, .services-item__content-2 ul
-    padding 4px 0 8px 18px
-    text-align left
+  .services-item__content .a-list,
+  .services-item__content .b-list
+    padding 8px 18px
+
+  .services-item__content .a-list
     list-style square outside
-    font-size 18px
+  
+  .services-item__content .b-list
+    list-style disc outside
+    padding-right 6px
+
+  .services-item__image
+    width auto
+    border-radius 6px
+    background-color color_grey
+    border 1px solid color_grey
+    padding 6px
 
   .services-item__image-is
-    width 90%
-
-  .services-item__content-2
-    text-align left
+    width 93%
 
 
   /*------------------------------*\

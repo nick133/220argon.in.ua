@@ -138,8 +138,8 @@ class ServiceItem extends Component {
   }
 
   componentDidMount() {
-    if (!this.props.opened)
-      document.getElementById(this.props.data.id + '_content').style.display = 'none';
+    if (this.props.opened)
+      document.getElementById(this.props.data.id + '_content').style.display = 'flex';
 
     this.setState({ titleClass: this._titleClass + (this.props.opened ?
       ' services-item__header--open' : ' services-item__header--close') });
@@ -153,17 +153,19 @@ class ServiceItem extends Component {
         </div>
 
         <div id={this.props.data.id + '_content'}
-          className="services-item__content  /  grid  full-width  items-center  text-center">
+          className="services-item__content  /  grid  full-width  items-stretch  text-center">
 
-          <div className="services-item__content-1  /  col-12  col-md-4"
+          <div className="col-12  col-md-4"
             dangerouslySetInnerHTML={ {__html: this.props.data.header.join(' ')} } />
 
-          <div className="col-12  col-md-4  col-md-order-2">
-            <img className="services-item__image-is"
-              src={this.props.data.image} alt={this.props.data.title} />
+          <div className="col-12  col-md-4  col-md-order-2  text-center">
+            <div className="services-item__image">
+              <img className="services-item__image-is"
+                src={this.props.data.image} alt={this.props.data.title} />
+            </div>
           </div>
 
-          <div className="services-item__content-2  /  col-12  col-md-4"
+          <div className="col-12  col-md-4"
             dangerouslySetInnerHTML={ {__html: this.props.data.content.join(' ')} } />
         </div>
 
@@ -174,12 +176,4 @@ class ServiceItem extends Component {
 
 
 export default Services;
-/*
- *
-          <div className="services-banner  /  col-7  text-center  align-end">
-            <div className="services-banner-a">
-              <img className="services-banner-is" src={this.props.data.banner} alt="Banner!" />
-            </div>
-          </div>
- *
- * */
+
