@@ -17,7 +17,6 @@
     list-style none
 
   .aaa
-
     height 90%
     margin 0 2px
     border-radius 4px
@@ -34,46 +33,51 @@
     background-size: contain;
     background-position: center bottom;
 
-  /*---- Item header container ----*/
+  /*---- Item header / title ----*/
 
   .services-item__header
-    &:hover
-      cursor pointer
-    &:hover .services-item__title-is
-      background-color darken(color_grey, 3%)
-      color color_red
-    &:hover .services-item__arrow-is
-      border-left-color darken(color_grey, 3%)
+    margin-top 5px
+    padding-left 12px
+    width auto
+    height arrow_height
 
-  .services-item__title--opened
+    background color_grey
+    font-size 26px
+    font-weight 500
+    line-height arrow_height
+    text-align left
+    text-transform uppercase
+
+  .services-item__header--open
+    border-radius 3px
     color color_red
 
-  .services-item__title
-  .services-item__arrow
-    padding 2px 0
+  .services-item__header--close
+    border-radius 3px 0 0 3px
+    margin-right arrow_width
 
-  .services-item__arrow
-    width arrow_width
+  // ====> Arrow
+  .services-item__header--close:before
+    content " "
+    position absolute
+    display block
+    left 100%
 
-  .services-item__arrow-is
     width  0
     height 0
     border-top (arrow_height / 2) solid transparent
     border-left arrow_width solid color_grey
     border-bottom (arrow_height / 2) solid transparent
+  
+  // ====> Arrow hovered
+  .services-item__header--close:hover:before
+    border-left-color darken(color_grey, 3%)
 
-  /*---- Item title ----*/
-
-  .services-item__title-is
-    height arrow_height
-    padding-left 12px
-    border-radius 3px 0 0 3px
-    background color_grey
-    font-size 26px
-    line-height 36px
-    font-weight 500
-    text-align left
-    text-transform uppercase
+  .services-item__header
+    &:hover
+      cursor pointer
+      background-color darken(color_grey, 3%)
+      color color_red
 
   /*---- Item content ----*/
 

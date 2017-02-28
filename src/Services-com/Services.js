@@ -41,7 +41,7 @@ class Services extends Component {
   }
 
   componentDidMount() {
-    this.scrollHeight = -2 - window.getComputedStyle(
+    this.scrollHeight = -8 - window.getComputedStyle(
       document.getElementsByClassName(Com.headerId)[0]).height.replace('px', '');
 
     this.reorderItems(this.props.openId);
@@ -130,7 +130,7 @@ class ServiceItem extends Component {
   constructor(props) {
     super(props);
 
-    this._titleClass = 'services-item__title-is';
+    this._titleClass = 'services-item__header  /  position-relative';
 
     this.state = {
       titleClass: this._titleClass
@@ -138,45 +138,36 @@ class ServiceItem extends Component {
   }
 
   componentDidMount() {
-    if (this.props.opened) {
+    if (this.props.opened)
       document.getElementById(this.props.data.id + '_content').style.display = 'block';
 
-      this.setState({ titleClass: this._titleClass + ' services-item__title--opened' });
-    }
+    this.setState({ titleClass: this._titleClass + (this.props.opened ?
+      ' services-item__header--open' : ' services-item__header--close') });
   }
 
   render() {
     return (
-      <table cellspacing="0" cellpadding="0" className="full-width">
-        <tr className="services-item__header" onClick={ linkEvent(this, this.props.onClick) }>
-          <td className="services-item__title">
-            <div className={this.state.titleClass}>{this.props.data.title}</div>
-          </td>
-          <td className="services-item__arrow">
-            <div className="services-item__arrow-is"></div>
-          </td>
-        </tr>
+      <div className="full-width">
+        <div className={this.state.titleClass} onClick={ linkEvent(this, this.props.onClick) }>
+          {this.props.data.title}
+        </div>
 
-        <tr>
-          <td id={this.props.data.id + '_content'} colspan="2"
-            className="services-item__content  /  animated  slideInDown  /  text-center">
+        <div id={this.props.data.id + '_content'}
+          className="services-item__content  /  animated  slideInDown  /  grid  full-width  items-begin  text-center">
 
-            <div className="grid  full-width  items-begin">
-              <div className="services-item__content-1  /  col-12  col-md-3"
-                dangerouslySetInnerHTML={ {__html: this.props.data.header.join(' ')} } />
+          <div className="services-item__content-1  /  col-12  col-md-3"
+            dangerouslySetInnerHTML={ {__html: this.props.data.header.join(' ')} } />
 
-              <div className="col-12  col-md-5">
-                <div className="aaa">
-                </div>
-              </div>
-
-              <div className="services-item__content-2  /  col-12  col-md-4"
-                dangerouslySetInnerHTML={ {__html: this.props.data.content.join(' ')} } />
+          <div className="col-12  col-md-5">
+            <div className="aaa">
             </div>
+          </div>
 
-          </td>
-        </tr>
-      </table>
+          <div className="services-item__content-2  /  col-12  col-md-4"
+            dangerouslySetInnerHTML={ {__html: this.props.data.content.join(' ')} } />
+        </div>
+
+      </div>
     );
   }
 }
