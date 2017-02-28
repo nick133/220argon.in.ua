@@ -146,27 +146,27 @@ class ServiceItem extends Component {
   }
 
   render() {
+    let item = this.props.data;
+    let smartImage = function(className) {
+      return '<div class="text-center"><img class="services-item__image  ' + className + '" src="' +
+        item.image + '" alt="' + item.title + '"></div>';
+    }
+
     return (
       <div className="full-width">
         <div className={this.state.titleClass} onClick={ linkEvent(this, this.props.onClick) }>
           {this.props.data.title}
         </div>
 
-        <div id={this.props.data.id + '_content'}
-          className="services-item__content  /  grid  full-width  items-stretch  text-center">
-
-          <div className="col-12  col-md-4"
-            dangerouslySetInnerHTML={ {__html: this.props.data.header.join(' ')} } />
-
-          <div className="col-12  col-md-4  col-md-order-2  text-center">
-            <div className="services-item__image">
-              <img className="services-item__image-is"
-                src={this.props.data.image} alt={this.props.data.title} />
-            </div>
+        <div id={this.props.data.id + '_content'} className="services-item__content">
+          <div className="services-item__content-a">
+            <div className="services-item__content-is" dangerouslySetInnerHTML={ {__html:
+              this.props.data.header.join(' ') +
+              smartImage('services-item__image--inside') +
+              ' ' + this.props.data.content.join(' ') +
+              smartImage('services-item__image--outside')
+            } } />
           </div>
-
-          <div className="col-12  col-md-4"
-            dangerouslySetInnerHTML={ {__html: this.props.data.content.join(' ')} } />
         </div>
 
       </div>

@@ -43,6 +43,8 @@ Axios.get(document.getElementById('host-data').src)
     });
 
 
+    /* ---- Map marker icon animation ---- */
+
     let locateIcon = document.getElementById('locate-icon');
     let prevLocateClass = locateIcon.className;
 
@@ -53,6 +55,7 @@ Axios.get(document.getElementById('host-data').src)
 
     animateIcon();
     setInterval(animateIcon, 10000);
+
   })
   .catch(function (error) {
     console.log(error);

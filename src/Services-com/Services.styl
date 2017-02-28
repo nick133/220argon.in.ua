@@ -86,11 +86,28 @@ arrow_width($h)
   .services-item__content
     display none
     width auto
-    padding 16px 10px 8px 10px
+    padding 8px 10px 8px 10px
     margin-bottom 24px
     text-align left
     font-size 18px
-    border-bottom 1px dashed #333
+
+  .services-item__content-a
+    width 100%
+    padding 8px
+    border 1px solid darken(color_grey, 5%)
+    border-radius 4px
+
+  .services-item__content-is
+    column-count 1
+    width 100%
+    max-width 1200px
+    margin auto
+    @media screen and (min-width: 500px)
+      column-count 2
+    @media screen and (min-width: 800px)
+      column-count 3
+    @media screen and (min-width: 1600px)
+      column-count 2
 
   .services-item__content h4, .services-item__content h4
     font-size 22px
@@ -98,7 +115,7 @@ arrow_width($h)
     white-space normal
 
   .services-item__content .a-list
-    padding 8px 4px 8px 20px
+    padding 8px 4px 24px 20px
     list-style none
 
   .services-item__content .a-list li:before
@@ -108,19 +125,21 @@ arrow_width($h)
     display inline-block
   
   .services-item__content .b-list
-    padding 8px 6px 8px 18px
+    padding 8px 6px 12px 18px
     list-style disc outside
 
   .services-item__image
-    width auto
-    border-radius 6px
-    background-color color_grey
-    border 1px solid color_grey
-    padding 6px
-
-  .services-item__image-is
     width 93%
+    max-width 600px
 
+  @media screen and (max-width: 500px)
+    .services-item__image--outside
+      display none
+    
+  @media screen and (min-width: 500px)
+    .services-item__image--inside
+      display none
+      
 
   /*------------------------------*\
     #RESPONSIVENESS
