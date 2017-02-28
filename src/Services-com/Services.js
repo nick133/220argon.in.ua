@@ -41,7 +41,7 @@ class Services extends Component {
   }
 
   componentDidMount() {
-    this.scrollHeight = -8 - window.getComputedStyle(
+    this.scrollHeight = -18 - window.getComputedStyle(
       document.getElementsByClassName(Com.headerId)[0]).height.replace('px', '');
 
     this.reorderItems(this.props.openId);

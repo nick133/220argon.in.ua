@@ -90,23 +90,26 @@ arrow_width($h)
     margin-bottom 24px
     text-align left
     font-size 18px
-    border-bottom 1px dashed #cdcdcd
+    border-bottom 1px dashed #333
 
   .services-item__content h4, .services-item__content h4
     font-size 22px
     padding-left 25px
     white-space normal
 
-  .services-item__content .a-list,
-  .services-item__content .b-list
-    padding 8px 18px
-
   .services-item__content .a-list
-    list-style square outside
+    padding 8px 4px 8px 20px
+    list-style none
+
+  .services-item__content .a-list li:before
+    content "\2013"
+    padding-right 6px
+    margin-left -17px
+    display inline-block
   
   .services-item__content .b-list
+    padding 8px 6px 8px 18px
     list-style disc outside
-    padding-right 6px
 
   .services-item__image
     width auto
