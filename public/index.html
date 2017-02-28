@@ -89,21 +89,22 @@
     </div>
 
 
-    <!-- <script type="text/javascript" async defer -->
-    <!--   src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDX9Jv8joMQuU-p4J2AExNwVmS1HF8guQw&callback=initMap"> -->
-    <!-- </script> -->
+    <script type="text/javascript" async defer
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDX9Jv8joMQuU-p4J2AExNwVmS1HF8guQw&callback=initMap">
+    </script>
     <script type="text/javascript">
       function initMap() {
-        var uluru = {lat: 50.5506, lng: 30.2172};
+        var posCenter = {lat: 50.5457, lng: 30.3341};
+        var posMarker = {lat: 50.5506, lng: 30.2172};
 
         var map = new google.maps.Map(document.getElementById('gmap'), {
-          zoom: 15,
-          center: uluru,
+          zoom: 11,
+          center: posCenter,
           mapTypeId: 'roadmap'
         });
 
         var marker = new google.maps.Marker({
-          position: uluru,
+          position: posMarker,
           map: map,
           title: 'Наша мастерская'
         });
