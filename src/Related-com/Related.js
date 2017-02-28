@@ -36,7 +36,7 @@ class Related extends Component {
 class RelatedItem extends Component {
   render() {
     return (
-      <div className="related__item  /  col-6  col-sm-4  col-md-3  col-xl-2">
+      <div className="related__item  /  col-6  col-sm-4  col-md-3  col-hd-2">
         <div className="related__item-is">
           <div className="related__item-title  /  grid  items-center  justify-center  text-center">
             <p className="col-auto">{this.props.title}</p>

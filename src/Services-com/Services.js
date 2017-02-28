@@ -153,7 +153,7 @@ class ServiceItem extends Component {
         </div>
 
         <div id={this.props.data.id + '_content'}
-          className="services-item__content  /  animated  slideInDown  /  grid  full-width  items-begin  text-center">
+          className="services-item__content  /  grid  full-width  items-begin  text-center">
 
           <div className="services-item__content-1  /  col-12  col-md-3"
             dangerouslySetInnerHTML={ {__html: this.props.data.header.join(' ')} } />

@@ -1,5 +1,10 @@
 @require "../hostlib"
 
+$arrow_height = 36px // must be even!
+
+arrow_width($h)
+  round($h * 0.4)
+
 /*------------------------------*\
   #SERVICES
 \*------------------------------*/
@@ -7,9 +12,6 @@
 .com-services
   width 100%
   padding 16px 0
-
-  arrow_height = 36px // must be even!
-  arrow_width  = round(arrow_height * 0.4)
 
   .services-item
     width auto
@@ -39,22 +41,23 @@
     margin-top 5px
     padding-left 12px
     width auto
-    height arrow_height
+    height $arrow_height
 
     background color_grey
     font-size 26px
     font-weight 500
-    line-height arrow_height
+    line-height $arrow_height
     text-align left
     text-transform uppercase
 
   .services-item__header--open
     border-radius 3px
     color color_red
+    text-align center
 
   .services-item__header--close
     border-radius 3px 0 0 3px
-    margin-right arrow_width
+    margin-right arrow_width($arrow_height)
 
   // ====> Arrow
   .services-item__header--close:before
@@ -65,10 +68,10 @@
 
     width  0
     height 0
-    border-top (arrow_height / 2) solid transparent
-    border-left arrow_width solid color_grey
-    border-bottom (arrow_height / 2) solid transparent
-  
+    border-top ($arrow_height / 2) solid transparent
+    border-left arrow_width($arrow_height) solid color_grey
+    border-bottom @border-top
+
   // ====> Arrow hovered
   .services-item__header--close:hover:before
     border-left-color darken(color_grey, 3%)
@@ -112,11 +115,19 @@
    .services-banner
      display none
 
-  // @media screen and (min-width: lg_grid_width)
-  //   new_arrow_height = 42px // must be even!
-  //   new_arrow_width  = round(new_arrow_height * 0.4)
-
   @media screen and (min-width: xl_grid_width)
+    $new_height = $arrow_height + 5
+
+    .services-item__header
+      padding-left 28px
+      font-size 28px
+      height $new_height
+      line-height $new_height
+
+    .services-item__header--close:before
+      border-top-width    ($new_height / 2)
+      border-left-width   arrow_width($new_height)
+      border-bottom-width @border-top-width
+
     .services--rest
       width 85%
-
