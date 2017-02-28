@@ -65,7 +65,7 @@ new_pricetag_h = 100px
 .price-tag__svg
   height 72px
   margin-top -2px
-  @media screen and (min-width: md_grid_width)
+  @media screen and (min-width: lg_grid_width)
     height new_pricetag_h
 
 
@@ -111,38 +111,27 @@ new_pricetag_h = 100px
     background none
 
   .addr-text
-    font-size 17px
+    font-size 18px
 
   .cell-locate-icon
     width 24px
 
-  .locate-ico__svg
-    width  24px
-    height @width
-
-  .locate-box
-    order 2
-
   .phone-box
-    order 1
     padding-left 4px
-    font-size 20px
+    font-size 21px
 
 // 600px
 @media screen and (min-width: md_grid_width)
   .find-us
-    right pricetag_width + 48px
-
-  .phone-box
-    font-size 26px
-    padding 0
-
-  .locate-box
-    order 1
+    right pricetag_width + 16px
 
   .addr-text
     padding-left 6px
-    font-size 24px
+    font-size 20px
+
+  .phone-box
+    font-size 22px
+    padding 0
 
   .locate-ico__svg
     width  footer_height
@@ -151,16 +140,38 @@ new_pricetag_h = 100px
 // 720px
 @media screen and (min-width: lg_grid_width)
   .find-us
-    right pricetag_width   + 80px
-    left  argon_logo_width + 30px
+    right pricetag_width   + 50px
+    left  argon_logo_width + 10px
+
+  .addr-text
+    font-size 24px
 
   .phone-box
-    font-size 32px
+    font-size 28px
 
 // 800px
-@media screen and (min-width: xl_grid_width)
+@media screen and (min-width: 800px)
   .find-us
-    left argon_logo_width + 65px
+    right pricetag_width  + 60px
+    left argon_logo_width + 40px
+
+// 960px
+@media screen and (min-width: 960px)
+  .find-us
+    left 20%
+    right 22%
+
+  .addr-text
+    font-size 28px
+
+  .phone-box
+    font-size 33px
+
+  /*---- Also fix price tag ----*/
+
+  .price-tag
+    top 1%
+    right 1%
 
 
 /*------------------------------*\

@@ -103,32 +103,18 @@
   .services-item__content-2
     text-align left
 
-    /*---- Responsiveness ----*/
 
-  @media screen and (max-width: sm_grid_width-10)
+  /*------------------------------*\
+    #RESPONSIVENESS
+  \*------------------------------*/
+
+  @media screen and (max-width: sm_grid_width)
    .services-banner
      display none
 
-  @media screen and (min-width: md_grid_width)
-    .services-item__title-is
-      padding-left 32px
-
-  @media screen and (min-width: lg_grid_width)
-    new_arrow_height = 42px // must be even!
-    new_arrow_width  = round(new_arrow_height * 0.4)
-
-    .services-item__arrow
-      width new_arrow_width
-
-    .services-item__arrow-is
-      border-top (new_arrow_height / 2) solid transparent
-      border-left new_arrow_width solid color_grey
-      border-bottom (new_arrow_height / 2) solid transparent
-
-    .services-item__title-is
-      height new_arrow_height
-      line-height 43px
-      font-size 32px
+  // @media screen and (min-width: lg_grid_width)
+  //   new_arrow_height = 42px // must be even!
+  //   new_arrow_width  = round(new_arrow_height * 0.4)
 
   @media screen and (min-width: xl_grid_width)
     .services--rest
