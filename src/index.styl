@@ -30,7 +30,10 @@ body, html,
   z-index 1
   position fixed
   background color_grey
-
+  
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none)
+  img[src$=".svg"]
+    width 100%
 
 /*------------------------------*\
   #HEADER
@@ -78,10 +81,6 @@ new_pricetag_h = 100px
   height footer_height
   font-style normal
 
-.locate-ico__svg
-  width  round(footer_height * 0.8)
-  height @width
-
 .addr-link
   color #333
   text-decoration none
@@ -90,6 +89,9 @@ new_pricetag_h = 100px
 
 .cell-locate-icon
   width footer_height
+
+.locate-ico__svg
+  width  round(footer_height * 0.8)
 
 .addr-text
   font-size 24px

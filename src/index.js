@@ -10,6 +10,21 @@ import * as Host from './hostlib.js';
 import './index.css';
 
 
+/*
+ *  Fix some IE shit
+ */
+var isIE =
+  !!navigator.userAgent.match(/Trident/g) ||
+  !!navigator.userAgent.match(/MSIE/g) ||
+  !!navigator.userAgent.match(/Microsoft Internet Explorer/g);
+
+// You use IE. That´s no good.
+if (isIE) {
+  var priceTag = document.getElementById('price-tag');
+  priceTag.style.right = '-100px';
+}
+
+ 
 Axios.get(document.getElementById('host-data').src)
   .then(function (response) {
     let uSearch = Host.parseUrlSearch();

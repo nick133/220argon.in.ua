@@ -16,8 +16,7 @@
     <link rel="stylesheet" 
       href="https://fonts.googleapis.com/css?family=Roboto+Condensed:700|Roboto:400,500,700,900&subset=cyrillic">
 
-    <!-- <link rel="stylesheet" href="%PUBLIC_URL%/styles/juist.min.css"> -->
-    <link rel="stylesheet" href="%PUBLIC_URL%/styles/juist.css">
+    <link rel="stylesheet" href="%PUBLIC_URL%/styles/juist.min.css">
     <link rel="stylesheet" href="%PUBLIC_URL%/styles/animate.min.css">
 
     <!-- <script> -->
@@ -40,7 +39,7 @@
 
     <div class="logo" onclick="javascript:location.href='#'" title="В начало!"></div>
 
-    <div class="price-tag">
+    <div id="price-tag" class="price-tag">
       <img src="/images/svg/price-tag.svg" class="price-tag__svg" alt="Цена - от 100 грн!">
     </div>
 
@@ -52,7 +51,7 @@
           <table cellspacing="0" cellpadding="0">
             <tr>
               <td class="cell-locate-icon">
-                <img id="locate-icon" src="/images/svg/gmap-marker.svg" class="locate-ico__svg" alt="Как нас найти?">
+                <img id="locate-icon" width=24 height=24 src="/images/svg/gmap-marker.svg" class="locate-ico__svg" alt="Как нас найти?">
               </td>
               <td class="addr-text">г. Буча</td>
             </tr>
@@ -89,9 +88,9 @@
     </div>
 
 
-    <script type="text/javascript" async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDX9Jv8joMQuU-p4J2AExNwVmS1HF8guQw&callback=initMap">
-    </script>
+    <!-- <script type="text/javascript" async defer -->
+    <!-- src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDX9Jv8joMQuU-p4J2AExNwVmS1HF8guQw&callback=initMap"> -->
+    <!-- </script> -->
     <script type="text/javascript">
       function initMap() {
         var posCenter = {lat: 50.5457, lng: 30.3341};
@@ -109,7 +108,7 @@
           title: 'Наша мастерская'
         });
       }
-    </script>
+   </script>
 
   </body>
 </html>
