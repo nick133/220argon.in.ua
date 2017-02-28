@@ -138,8 +138,8 @@ class ServiceItem extends Component {
   }
 
   componentDidMount() {
-    if (this.props.opened)
-      document.getElementById(this.props.data.id + '_content').style.display = 'block';
+    if (!this.props.opened)
+      document.getElementById(this.props.data.id + '_content').style.display = 'none';
 
     this.setState({ titleClass: this._titleClass + (this.props.opened ?
       ' services-item__header--open' : ' services-item__header--close') });
@@ -153,14 +153,14 @@ class ServiceItem extends Component {
         </div>
 
         <div id={this.props.data.id + '_content'}
-          className="services-item__content  /  grid  full-width  items-begin  text-center">
+          className="services-item__content  /  grid  full-width  items-center  text-center">
 
-          <div className="services-item__content-1  /  col-12  col-md-3"
+          <div className="services-item__content-1  /  col-12  col-md-4"
             dangerouslySetInnerHTML={ {__html: this.props.data.header.join(' ')} } />
 
-          <div className="col-12  col-md-5">
-            <div className="aaa">
-            </div>
+          <div className="col-12  col-md-4  col-md-order-2">
+            <img className="services-item__image-is"
+              src={this.props.data.image} alt={this.props.data.title} />
           </div>
 
           <div className="services-item__content-2  /  col-12  col-md-4"
