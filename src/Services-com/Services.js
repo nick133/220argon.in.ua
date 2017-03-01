@@ -99,22 +99,17 @@ class Services extends Component {
 
   render() {
     return(
-      <div className="grid  full-width  items-center">
+      <div className="full-width">
         { this.state.openedItemDOM !== undefined &&
-          <ul className="services--open  /  col-12">{ this.state.openedItemDOM }</ul> }
+          <ul className="services--open">{ this.state.openedItemDOM }</ul> }
 
         <div className="grid  full-width  items-stretch">
-          <div className="services-banner  /  col-6  col-lg-7">
-            <style type="text/css">
-              .services-banner {'{'}
-                background-image: url({this.props.data.banner});
-              {'}'}
-            </style>
-          </div>
-
-          <div className="col-12  col-sm-6  col-lg-5">
+          <div className="col-12  col-sm-6">
             <ul className="services--rest">{ this.state.itemsDOM }</ul>
           </div>
+
+          <div className="services-banner  /  col-6"
+          style={ 'background-image: url(' + this.props.data.banner + ')' } />
         </div>
       </div>
     );
@@ -130,7 +125,7 @@ class ServiceItem extends Component {
   constructor(props) {
     super(props);
 
-    this._titleClass = 'services-item__header  /  position-relative';
+    this._titleClass = 'services-item__header';
 
     this.state = {
       titleClass: this._titleClass
@@ -146,12 +141,6 @@ class ServiceItem extends Component {
   }
 
   render() {
-    let item = this.props.data;
-    let smartImage = function(className) {
-      return '<div class="text-center"><img class="services-item__image  ' + className + '" src="' +
-        item.image + '" alt="' + item.title + '"></div>';
-    }
-
     return (
       <div className="full-width">
         <div className={this.state.titleClass} onClick={ linkEvent(this, this.props.onClick) }>
@@ -161,10 +150,10 @@ class ServiceItem extends Component {
         <div id={this.props.data.id + '_content'} className="services-item__content">
           <div className="services-item__content-a">
             <div className="services-item__content-is" dangerouslySetInnerHTML={ {__html:
-              this.props.data.header.join(' ') +
-              smartImage('services-item__image--inside') +
-              ' ' + this.props.data.content.join(' ') +
-              smartImage('services-item__image--outside')
+              '<div class="text-center"><img class="services-item__image" src="' +
+              this.props.data.image + '" alt="' + this.props.data.title + '"></div>' +
+              this.props.data.header.join('') +
+              this.props.data.content.join('')
             } } />
           </div>
         </div>

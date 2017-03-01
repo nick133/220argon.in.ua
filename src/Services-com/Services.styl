@@ -17,46 +17,39 @@ arrow_width($h)
     width auto
     list-style none
 
-  .aaa
-    height 90%
-    margin 0 2px
-    border-radius 4px
-    border 1px solid #666
-    background-image: url(/images/service-latun.jpg)
-    background-size: contain
-    background-repeat: no-repeat
-    background-position: center center
-
   /*---- Banner image ----*/
 
   .services-banner
     background-repeat: no-repeat;
     background-size: contain;
-    background-position: center bottom;
+    background-position: 12% 50%;
 
   /*---- Item header / title ----*/
 
   .services-item__header
     margin 5px 8px 0 8px
-    padding-left 12px
     width auto
-    height $arrow_height
-
     background color_grey
-    font-size 26px
-    font-weight 500
-    line-height $arrow_height
-    text-align left
     text-transform uppercase
 
   .services-item__header--open
     border-radius 3px
     color color_red
+    font-size 42px
+    font-weight 900
+    height ($arrow_height + 16)
+    line-height @height
     text-align center
 
   .services-item__header--close
+    padding-left 12px
     border-radius 3px 0 0 3px
     margin-right (arrow_width($arrow_height) + 8)
+    height $arrow_height
+    line-height @height
+    font-size 26px
+    font-weight 500
+    text-align left
 
   // ====> Arrow
   .services-item__header--close:before
@@ -76,6 +69,7 @@ arrow_width($h)
     border-left-color darken(color_grey, 3%)
 
   .services-item__header
+    position relative
     &:hover
       cursor pointer
       background-color darken(color_grey, 3%)
@@ -132,14 +126,6 @@ arrow_width($h)
     width 93%
     max-width 600px
 
-  @media screen and (max-width: 500px)
-    .services-item__image--outside
-      display none
-    
-  @media screen and (min-width: 500px)
-    .services-item__image--inside
-      display none
-      
 
   /*------------------------------*\
     #RESPONSIVENESS
@@ -152,11 +138,11 @@ arrow_width($h)
   @media screen and (min-width: xl_grid_width)
     $new_height = $arrow_height + 5
 
-    .services-item__header
-      padding-left 28px
+    .services-item__header--close
+      padding-left 6%
       font-size 28px
       height $new_height
-      line-height $new_height
+      line-height @height
 
     .services-item__header--close:before
       border-top-width    ($new_height / 2)
@@ -164,4 +150,7 @@ arrow_width($h)
       border-bottom-width @border-top-width
 
     .services--rest
-      width 85%
+      width auto
+      margin-left 4%
+      margin-right 6%
+

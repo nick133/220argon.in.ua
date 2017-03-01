@@ -1,10 +1,13 @@
 
 const gulp    = require('gulp'),
       gutil   = require('gulp-util'),
-      glob    = require("glob"),
       ps      = require('child_process'),
       plumber = require('gulp-plumber'),
-      stylus  = require('gulp-stylus');
+      stylus  = require('gulp-stylus'),
+
+      glob = require("glob"),
+      del  = require("del");
+
 
 const color = gutil.colors;
 
@@ -44,4 +47,14 @@ gulp.task('styl', function() {
         .pipe(plumber())
         .pipe(stylus())
         .pipe(gulp.dest('src'));
+});
+
+gulp.task('clean-build', function() {
+    del(['build/**/.*', 'build/**/*.swp'], {dryRun: false})
+    .then(paths => {
+        gutil.log(color.yellow('Performing build cleanup:'));
+        paths.forEach(function(file) {
+            gutil.log(color.red('x'), file);
+        });
+    });
 });
