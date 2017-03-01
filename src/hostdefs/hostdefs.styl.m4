@@ -8,7 +8,7 @@ text_color = __txt_color
 color_red = __txt_color_red
 
 // background rgba(230,230,230,0.95)
-color_grey = rgb(230,230,230)
+color_grey = rgb(225,225,225)
 
 // JuicedCSS grid responsive sizes (max-width: 1170px)
 xs_grid_width = 360px
