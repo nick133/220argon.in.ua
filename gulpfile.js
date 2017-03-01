@@ -18,7 +18,12 @@ const src = {
     html:   "src/**/*.html",
     css:    "src/**/*.css",
     js:     "src/**/*.js",
-    json:   "src/**/*.json"
+    json:   "src/**/*.json",
+    clean:  [
+        'build/**/.*',
+        'build/**/*.swp',
+        'build/**/Thumbs.db'
+    ]
 };
 
 
@@ -50,7 +55,7 @@ gulp.task('styl', function() {
 });
 
 gulp.task('clean-build', function() {
-    del(['build/**/.*', 'build/**/*.swp'], {dryRun: false})
+    del(src.clean, { dryRun: false })
     .then(paths => {
         gutil.log(color.yellow('Performing build cleanup:'));
         paths.forEach(function(file) {
