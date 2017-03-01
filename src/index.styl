@@ -14,9 +14,7 @@ h1, h2, h3, h4, h5, h6
 .main
   color text_color
   background-color #fff
-  font-style normal
   font-family "Roboto", "Open Sans", "lucida grande", "Segoe UI", arial, verdana, "lucida sans unicode", tahoma, sans-serif
-  text-align left
 
 body, html,
 .main-header,
@@ -63,6 +61,8 @@ body, html,
   position fixed
   top   0
   right 0
+  &:hover
+    cursor pointer
 
 new_pricetag_h = 100px
 .price-tag__svg
@@ -189,6 +189,7 @@ new_pricetag_h = 100px
   line-height 56px
   font-size 46px
   font-weight 900
+  font-family "Roboto", "Open Sans", "lucida grande", "Segoe UI", arial, verdana, "lucida sans unicode", tahoma, sans-serif
   color color_red
   text-transform uppercase
   text-shadow 2px 2px 4px #aaa
