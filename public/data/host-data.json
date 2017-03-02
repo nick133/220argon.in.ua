@@ -73,7 +73,6 @@
     "services" : {
       "title" : "Hello",
       "banner" : "/images/banner-welcome.jpg",
-      "banner-xs" : "/images/banner-welcome-xs.jpg",
       "items" : [
         {   "title" : "алюминий",
             "id" : "alu",
