@@ -14,7 +14,7 @@ class Related extends Component {
         <div className="grid  full-width  items-stretch  justify-center  text-center">
         {
 
-          this.props.data.items.map(function(item) {
+          this.props.data.items.map(item => {
             let uid = Math.random().toString(36).substr(2, 8);
   
             return (<RelatedItem

@@ -10,7 +10,7 @@ class Advantages extends Component {
       <div class="advantages  /  grid  full-width  items-stretch  text-center">
       {
 
-        this.props.data.items.map(function(item, n) {
+        this.props.data.items.map((item, n) => {
           let uid = Math.random().toString(36).substr(2, 8);
           
           let parityClassIcon = '';

@@ -26,7 +26,7 @@ if (isIE) {
 
  
 Axios.get(document.getElementById('host-data').src)
-  .then(function (response) {
+  .then(response => {
     let uSearch = Host.parseUrlSearch();
 
     [ [ 'com-advantages', <Advantages data={ response.data.blocks.advantages } /> ],
@@ -38,9 +38,7 @@ Axios.get(document.getElementById('host-data').src)
 
       [ 'com-related', <Related data={ response.data.blocks.related } /> ],
 
-    ].forEach(function(component) {
-      Inferno.render(component[1], document.getElementById(component[0]));
-    });
+    ].forEach( component => Inferno.render(component[1], document.getElementById(component[0])) );
 
 
     /* ---- Map marker icon animation ---- */
@@ -48,15 +46,13 @@ Axios.get(document.getElementById('host-data').src)
     let locateIcon = document.getElementById('locate-icon');
     let prevLocateClass = locateIcon.className;
 
-    let animateIcon = function(t) {
+    let animateIcon = t => {
       locateIcon.className += '  animated  bounce';
-      setTimeout(function() { locateIcon.className = prevLocateClass; }, 4000);
+      setTimeout(() => { locateIcon.className = prevLocateClass; }, 4000);
     };
 
     animateIcon();
     setInterval(animateIcon, 10000);
 
   })
-  .catch(function (error) {
-    console.log(error);
-  });
+  .catch(error => console.log(error));

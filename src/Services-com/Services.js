@@ -7,7 +7,6 @@ import * as Defs from '../hostdefs/hostdefs.js';
 
 
 let Com = {
-  idPrefix: 'svarka-',
   headerId: 'main-header',
 
   // STYLUS css colors
@@ -50,7 +49,7 @@ class Services extends Component {
   reorderItems(openId) {
     let vItems = [];
 
-    this.props.data.items.forEach(function(item, n) {
+    this.props.data.items.forEach((item, n) => {
       let vItem = (
         <li id={item.id} className="services-item">
           <ServiceItem
@@ -147,7 +146,7 @@ class ServiceItem extends Component {
         '<div class="text-center"><img class="services-item__image' +
         (idx > 0 ? ' services-item__image--add' : '') + '" src="' +
         item.images[idx] + '" alt="' + item.title + '"></div>';
-    };
+    }
 
     return (
       <div className="full-width">
