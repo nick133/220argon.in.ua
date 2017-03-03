@@ -141,6 +141,14 @@ class ServiceItem extends Component {
   }
 
   render() {
+    let item = this.props.data;
+    let itemImage = idx => {
+      return item.images[idx] === undefined ? '' :
+        '<div class="text-center"><img class="services-item__image' +
+        (idx > 0 ? ' services-item__image--add' : '') + '" src="' +
+        item.images[idx] + '" alt="' + item.title + '"></div>';
+    };
+
     return (
       <div className="full-width">
         <div className={this.state.titleClass} onClick={ linkEvent(this, this.props.onClick) }>
@@ -150,8 +158,7 @@ class ServiceItem extends Component {
         <div id={this.props.data.id + '_content'} className="services-item__content">
           <div className="services-item__content-a">
             <div className="services-item__content-is" dangerouslySetInnerHTML={ {__html:
-              '<div class="text-center"><img class="services-item__image" src="' +
-              this.props.data.image + '" alt="' + this.props.data.title + '"></div>' +
+              itemImage(0) + itemImage(1) +
               this.props.data.header.join('') +
               this.props.data.content.join('')
             } } />

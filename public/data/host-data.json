@@ -76,7 +76,9 @@
       "items" : [
         {   "title" : "алюминий",
             "id" : "alu",
-            "image" : "/images/service-alu2.jpg",
+            "images" : [
+                "/images/service-alu2.jpg"
+            ],
             "header" : [
               "<h4>Сварка<br>Наплавка<br>Пайка</h4>",
               "<br>",
@@ -107,7 +109,9 @@
         },
         {   "title" : "нерж",
             "id" : "stainless",
-            "image" : "/images/service-stainless.jpg",
+            "images" : [
+                "/images/service-stainless.jpg"
+            ],
             "header" : [
               "<h4>Сварка<br>Наплавка<br>Полировка</h4>",
               "<br>",
@@ -131,7 +135,10 @@
         },
         {   "title" : "чугун",
             "id" : "chugun",
-            "image" : "/images/service-chugun.jpg",
+            "images" : [
+                "/images/service-chugun.jpg",
+                "/images/service-chugun2.jpg"
+            ],
             "header" : [
               "<div><b>Сварка</b> чугуна</div>",
               "<div><b>Наплавка</b> по чугуну</div>",
@@ -150,7 +157,9 @@
         },
         {   "title" : "сталь",
             "id" : "steel",
-            "image" : "/images/service-stal.jpg",
+            "images" : [
+                "/images/service-stal.jpg"
+            ],
             "header" : [
               "<h4>Сварка<br>Наплавка</h4>",
               "<ul class='a-list'>",
@@ -174,7 +183,10 @@
         },
         {   "title" : "медь",
             "id" : "copper",
-            "image" : "/images/service-copper2.jpg",
+            "images" : [
+                "/images/service-copper.jpg",
+                "/images/service-copper2.jpg"
+            ],
             "header" : [
               "<h4>Сварка</h4>",
               "<h4>Наплавка</h4>",
@@ -191,7 +203,10 @@
         },
         {   "title" : "латунь",
             "id" : "latun",
-            "image" : "/images/service-latun.jpg",
+            "images" : [
+                "/images/service-latun.jpg",
+                "/images/service-latun2.jpg"
+            ],
             "header" : [
               "<h4>Сварка</h4>",
               "<h4>Наплавка</h4>",
@@ -209,7 +224,10 @@
         },
         {   "title" : "бронза",
             "id" : "bronza",
-            "image" : "/images/service-bronza.jpg",
+            "images" : [
+                "/images/service-bronza.jpg",
+                "/images/service-bronza2.jpg"
+            ],
             "header" : [
               "<h4>Сварка</h4>",
               "<h4>Наплавка</h4>",
@@ -225,7 +243,10 @@
         },
         {   "title" : "титан",
             "id" : "titan",
-            "image" : "/images/service-titan.jpg",
+            "images" : [
+                "/images/service-titan.jpg",
+                "/images/service-titan2.jpg"
+            ],
             "header" : [
               "<h4>Сварка</h4>",
               "<h4>Наплавка</h4>",

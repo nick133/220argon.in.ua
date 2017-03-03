@@ -77,6 +77,9 @@ arrow_width($h)
 
   /*---- Item content ----*/
 
+  $col2_width = 500px
+  $col3_width = 800px
+
   .services-item__content
     display none
     width auto
@@ -96,12 +99,10 @@ arrow_width($h)
     width 100%
     max-width 1200px
     margin auto
-    @media screen and (min-width: 500px)
+    @media screen and (min-width: $col2_width)
       column-count 2
-    @media screen and (min-width: 800px)
+    @media screen and (min-width: $col3_width)
       column-count 3
-    @media screen and (min-width: 1600px)
-      column-count 2
 
   .services-item__content h4, .services-item__content h4
     font-size 22px
@@ -125,6 +126,11 @@ arrow_width($h)
   .services-item__image
     width 93%
     max-width 600px
+
+  // Show additional images only with 3 columns
+  @media screen and (max-width: $col3_width)
+    .services-item__image--add
+      display none
 
 
   /*------------------------------*\
