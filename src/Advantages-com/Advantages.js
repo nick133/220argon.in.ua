@@ -1,7 +1,7 @@
 import Inferno from 'inferno';
 import Component from 'inferno-component';
 
-import './Advantages.css';
+import './Advantages.styl';
 
 
 class Advantages extends Component {
