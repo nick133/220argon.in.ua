@@ -1,7 +1,7 @@
 import Inferno, { linkEvent } from 'inferno';
 import Component from 'inferno-component';
 
-import './Services.css';
+import './Services.styl';
 
 import * as Defs from '../hostdefs/hostdefs.js';
 

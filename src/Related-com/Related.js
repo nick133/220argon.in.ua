@@ -1,7 +1,7 @@
 import Inferno from 'inferno';
 import Component from 'inferno-component';
 
-import './Related.css';
+import './Related.styl';
 
 //import * as host from './hostlib.js';
 
@@ -10,7 +10,7 @@ class Related extends Component {
   render() {
     return (
       <div className="related">
-        <div className="related-title  /  text-center">{this.props.data.title}</div>
+        <div className="related-title">{this.props.data.title}</div>
         <div className="grid  full-width  items-stretch  justify-center  text-center">
         {
 

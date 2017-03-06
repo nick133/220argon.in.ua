@@ -7,21 +7,31 @@ import Related    from './Related-com/Related';
 
 import * as Host from './hostlib.js';
 
-import './index.css';
+import './index.styl';
 
 
 /*
- *  Fix some IE shit
+ *  Hotfix browser related shit
  */
-var isIE =
-  !!navigator.userAgent.match(/Trident/g) ||
-  !!navigator.userAgent.match(/MSIE/g) ||
-  !!navigator.userAgent.match(/Microsoft Internet Explorer/g);
-
-// You use IE. That´s no good.
-if (isIE) {
-  var priceTag = document.getElementById('price-tag');
-  priceTag.style.right = '-100px';
+function browserHotfix() {
+  var isIE =
+    !!navigator.userAgent.match(/Trident/g) ||
+    !!navigator.userAgent.match(/MSIE/g) ||
+    !!navigator.userAgent.match(/Microsoft Internet Explorer/g);
+  var isChrome = !!window.chrome;
+  var isOpera = window.onoperadetachedviewcontrol !== undefined;
+  
+  // You use IE. That´s no good.
+  if (isIE) {
+    var priceTag = document.getElementById('price-tag');
+    priceTag.style.right = '-100px';
+  } else if (isChrome || isOpera) {
+    // Bug with Roboto numeric font weight
+    [ [ 'bolder', [ 'welcome-title', 'related-title', 'services-item__header--open' ]],
+      [ 'bold',   [ 'services-item__header--close' ]]
+    ].forEach(group => group[1].forEach(cls =>
+        document.getElementsByClassName(cls)[0].style.fontWeight = group[0]));
+  }
 }
 
  
@@ -40,6 +50,8 @@ Axios.get(document.getElementById('host-data').src)
 
     ].forEach( component => Inferno.render(component[1], document.getElementById(component[0])) );
 
+    browserHotfix();
+
 
     /* ---- Map marker icon animation ---- */
 
@@ -53,7 +65,6 @@ Axios.get(document.getElementById('host-data').src)
 
     animateIcon();
     setInterval(animateIcon, 10000);
-
   })
   .catch(error => console.log(error));
 
