@@ -137,18 +137,18 @@ task.is('webpack-dev-server', () => {
   #BUILD-TASKS
 \*------------------------------*/
 
-task.is('webpack:build', debug => {
+task.is('webpack:build', obj => {
   task.do('clean-build');
 
   // if (isInteractive) clearConsole();
 
-  if (debug) process.env.WEBPACK_BUILD = 'debug';
+  if (obj.debug) process.env.WEBPACK_BUILD = 'debug';
 
   let config = require(webpackConfig);
 
   // run webpack
   webpack(config, (err, stats) => {
-		if (err) throw new gutil.PluginError("webpack:build", err);
+		if (err) throw "[webpack:build] " + err;
 		log("[webpack:build]", stats.toString({ colors: true }));
   });
 });
