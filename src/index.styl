@@ -64,12 +64,12 @@ body, html,
   &:hover
     cursor pointer
 
-new_pricetag_h = 100px
+$new_pricetag_h = 100px
 .price-tag__svg
   height 72px
   margin-top -2px
   @media screen and (min-width: lg_grid_width)
-    height new_pricetag_h
+    height $new_pricetag_h
 
 
 /*------------------------------*\
@@ -205,7 +205,7 @@ new_pricetag_h = 100px
 
 .map
   text-align center
-  padding 16px 0 footer_height 0
+  padding 16px 0 footer_height
 
 .map__header
   padding-bottom 6px
@@ -230,7 +230,7 @@ new_pricetag_h = 100px
   
 @media screen and (min-width: lg_grid_width)
   .map__header
-    padding 24px 0 6px 0
+    padding 24px 0 6px
     font-size 24px
 
   .map__header-is
