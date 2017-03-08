@@ -9,6 +9,7 @@
 
 const webpack = require('webpack');
 const url = require('url');
+const crypto = require('crypto');
 
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -25,22 +26,30 @@ if (env.NODE_ENV !== 'production')
 
 
 /* -------- Common pieces -------- */
-const autoprefixer = { 
+const postcss_loader = { 
   loader: 'postcss-loader',
   options: {
-    plugins: () => {
-      return [
-        require('autoprefixer')({
-          browsers: [
-            '>1%',
-            'last 4 versions',
-            'Firefox ESR',
-            'not ie < 9', // Inferno doesn't support IE8 anyway
-          ],
-        }),
-      ];
-    },
-  }
+    plugins: () => [
+      require('stylelint')({
+        configFile: paths.appEtc + '/stylelint.config.js',
+      }),
+
+      require('autoprefixer')({
+        browsers: [
+          '>1%',
+          'last 4 versions',
+          'Firefox ESR',
+          'not ie < 9', // Inferno doesn't support IE8 anyway
+        ],
+      }),
+
+      require('postcss-reporter')({
+        throwError: true,
+        clearAllMessages: true,
+        noPlugin: true,
+      }),
+    ],
+  },
 };
 
 
@@ -64,7 +73,7 @@ webpackConfig = {
     // The build folder.
     path: paths.appBuild,
     filename: paths.asset('js/[name].[chunkhash:8].js'),
-    chunkFilename: paths.asset('static/js/[name].[chunkhash:8].chunk.js'),
+    //chunkFilename: paths.asset('static/js/[name].[chunkhash:8].chunk.js'),
     // We inferred the "public path" (such as / or /my-project) from homepage.
     publicPath: paths.publicPath,
   },
@@ -75,7 +84,7 @@ webpackConfig = {
       {
         test: /\.jsx?$/,
         enforce: 'pre',
-        include: [ paths.appSrc ],
+        include: paths.appSrc,
         exclude: /node_modules/,
         loader: 'eslint-loader',
         options: {
@@ -100,7 +109,7 @@ webpackConfig = {
         exclude: [
           /\.html$/,
           /\.[jt]sx?$/,
-          /\.css$/,
+          /\.s?css$/,
           /\.styl$/,
           /\.json$/,
           /\.svg$/
@@ -138,15 +147,44 @@ webpackConfig = {
               },
             },
 
-            autoprefixer,
+            postcss_loader,
           ],
           fallback: "style-loader",
         }),
       },
 
-      //====> Extract STYLUS CSS
+      //====> Extract STYLUS CSS and use CSS modules for components
       {
         test: /\.styl$/,
+        include: paths.appComponents,
+        loader: ExtractTextPlugin.extract({
+          use: [
+            {
+              loader: 'css-loader',
+              options: {
+                importLoaders: 2,
+                modules: true, // Use CSS modules for components
+                getLocalIdent: (context, localIdentName, localName, options) => {
+                  return localName.toLowerCase() + '_' + crypto
+                    .createHash('sha512')
+                    .update(context.resource + localName)
+                    .digest('hex')
+                    .substr(0, 12);
+                },
+                minimize: (env.WEBPACK_BUILD !== 'debug'),
+              }
+            },
+  
+            postcss_loader,
+  
+            { loader: 'stylus-loader' },
+          ],
+          fallback: "style-loader",
+        }),
+      },
+      {
+        test: /\.styl$/,
+        exclude: paths.appComponents,
         loader: ExtractTextPlugin.extract({
           use: [
             {
@@ -154,11 +192,11 @@ webpackConfig = {
               options: {
                 importLoaders: 2,
                 minimize: (env.WEBPACK_BUILD !== 'debug'),
-              },
+              }
             },
-
-            autoprefixer,
-
+  
+            postcss_loader,
+  
             { loader: 'stylus-loader' },
           ],
           fallback: "style-loader",
@@ -170,6 +208,7 @@ webpackConfig = {
   resolve: {
     modules: [
       'node_modules',
+      '../node_modules',
     ],
     extensions: [".js", ".json", ".css", ".styl"],
   },
@@ -194,12 +233,17 @@ webpackConfig = {
     }),
 
     // Note: this won't work without ExtractTextPlugin.extract(..) in `loaders`.
-    new ExtractTextPlugin(paths.asset('css/[name].[contenthash:8].css')),
+    new ExtractTextPlugin({
+      filename: paths.asset('css/[name].[contenthash:8].css'),
+      ignoreOrder: true,
+    }),
 
     // Generates an `index.html` file with the <script> injected.
     new HtmlWebpackPlugin({
       inject: true,
       template: paths.appHtml,
+      cache: true,
+      chunks: [ 'main' ],
       minify: env.WEBPACK_BUILD !== 'debug' ? {
         removeComments: true,
         collapseWhitespace: true,

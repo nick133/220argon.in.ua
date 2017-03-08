@@ -24,9 +24,11 @@ module.exports = {
   appIndexJs:     resolveApp('src/index.js'),
   appPackageJson: resolveApp('package.json'),
   appSrc:         resolveApp('src'),
+  appComponents:  resolveApp('src/components'),
+  appEtc:         resolveApp('etc'),
   appNodeModules: resolveApp('node_modules'),
 
   publicPath: '/',
-  asset: (filename) => 'assets/' + filename,
+  asset: filename => 'assets/' + filename,
 };
 
