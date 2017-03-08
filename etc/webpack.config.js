@@ -230,6 +230,7 @@ webpackConfig = {
 
     new InterpolateHtmlPlugin({
       PUBLIC_URL: '/',
+      WEBPACK_BUILD: env.WEBPACK_BUILD,
     }),
 
     // Note: this won't work without ExtractTextPlugin.extract(..) in `loaders`.
@@ -256,6 +257,9 @@ webpackConfig = {
         minifyCSS: true,
         minifyURLs: true
       } : false,
+
+      // Exported variables for template
+      devmode: env.WEBPACK_BUILD === 'debug' ? true : false,
     })
   ],
 
