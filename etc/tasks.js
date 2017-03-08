@@ -1,15 +1,11 @@
 
-/* -------- GULP plugins -------- */
-const gulp    = require('gulp'),
-      gutil   = require('gulp-util'),
-      plumber = require('gulp-plumber'),
-      stylus  = require('gulp-stylus');
-
 /* -------- Node modules -------- */
-const glob = require('glob'),
-      del  = require('del'),
-      fs   = require('fs-extra'),
-      path = require('path');
+const chalk = require('chalk'),
+      fs    = require('fs-extra'),
+      path  = require('path'),
+      task  = require('./wolt');
+
+const log = console.log;
 
 const webpack = require('webpack'),
       devServer = require('webpack-dev-server'),
@@ -18,67 +14,44 @@ const webpack = require('webpack'),
       openBrowser = require('inferno-dev-utils/openBrowser');
 
 /* -------- Misc configs -------- */
-process.env.NODE_ENV = 'production'; // Must be set BEFORE webpack config is loaded!
-//process.env.WEBPACK_BUILD = 'debug'; // Global debug - no minification, etc.
+const paths = require('./paths');
+
+// Must be set BEFORE webpack config is loaded! Also is needed for Babel.
+process.env.NODE_ENV = 'production';
 
 const webpackConfig = './webpack.config';
 
 const isInteractive = process.stdout.isTTY;
-
-const paths = require('./paths');
-
-const color = gutil.colors;
 
 const host = {
   domain: 'localhost',
   port: 3000,
 }
 
-/* -------- Sources globs -------- */
-const src = {
-    html:   "src/**/*.html",
-    css:    "src/**/*.css",
-    js:     "src/**/*.js",
-    json:   "src/**/*.json",
-};
-
 
 /*------------------------------*\
   #DEFAULT-TASK
 \*------------------------------*/
 
-gulp.task('default', [ 'build' ]);
+task.is('default', 'build');
 
 
 /*------------------------------*\
-  #UTILITY-TASKS
+  #CLEAN-TASKS
 \*------------------------------*/
 
-gulp.task('clean-build', () => del('build/*'));
-gulp.task('cleanall', () => del('build'));
+task.is('clean-build', () => fs.emptyDirSync('build'));
 
-
-/*------------------------------*\
-  #TASK.WEBPACK:BUILD
-\*------------------------------*/
-
-gulp.task('webpack:build', [ 'clean-build' ], callback => {
-  let config = require(webpackConfig);
-
-  // run webpack
-  webpack(config, (err, stats) => {
-		if (err) throw new gutil.PluginError("webpack:build", err);
-		gutil.log("[webpack:build]", stats.toString({ colors: true }));
-		callback();
-  });
-});
+task.is('cleanall', () => fs.removeSync('build'));
 
 
 /*------------------------------*\
   #TASK.WEBPACK-DEV-SERVER
 \*------------------------------*/
 
-gulp.task('webpack-dev-server', callback => {
+task.is('watch', 'webpack-dev-server');
+
+task.is('webpack-dev-server', () => {
   process.env.WEBPACK_BUILD = 'debug'; // Ensure no minifications/etc at development
 
 	// modify some webpack config options
@@ -92,16 +65,18 @@ gulp.task('webpack-dev-server', callback => {
 
   let compiler = webpack(config);
 
+  // "invalid" event fires when you have changed a file, and Webpack is
+  // recompiling a bundle. WebpackDevServer takes care to pause serving the
+  // bundle, so if you refresh, it'll wait instead of serving the old one.
+  // "invalid" is short for "bundle invalidated", it doesn't imply any errors.
   compiler.plugin('invalid', () => {
     if (isInteractive) clearConsole();
-    gutil.log(color.cyan('Compiling...'));
+    log(chalk.cyan('Compiling...'));
   });
 
   // "done" event fires when Webpack has finished recompiling the bundle.
   // Whether or not you have warnings or errors, you will get this event.
   compiler.plugin('done', stats => {
-    if (isInteractive) clearConsole();
-
     // We have switched off the default Webpack output in WebpackDevServer
     // options so we are going to "massage" the warnings and errors and present
     // them in a readable focused way.
@@ -109,37 +84,42 @@ gulp.task('webpack-dev-server', callback => {
     const isSuccessful = !messages.errors.length && !messages.warnings.length;
     const showInstructions = isSuccessful && (isInteractive || isFirstCompile);
 
-    if (isSuccessful) gutil.log(color.green('Compiled successfully!'));
+    if (isSuccessful) {
+      // Clear console only at success - no lost error messages from linters
+      if (isInteractive) clearConsole(); 
+
+      log(chalk.green('Compiled successfully!'));
+    }
 
     if (showInstructions) {
-      gutil.log("\nThe app is running at:", color.cyan(appUrl),
+      log("\nThe app is running at:", chalk.cyan(appUrl),
         "\n\nNote that the development build is not optimized.",
-        "\nTo create a production build, use", color.cyan('npm run build') + ".\n");
+        "\nTo create a production build, use", chalk.cyan('npm run build') + ".\n");
       isFirstCompile = false;
     }
 
     // If errors exist, only show errors.
     if (messages.errors.length) {
-      gutil.log(color.red("Failed to compile.\n"));
+      log(chalk.red("Failed to compile.\n"));
       messages.errors.forEach(message => {
-        gutil.log(message);
-        gutil.log();
+        log(message);
+        log();
       });
       return;
     }
 
     // Show warnings if no errors were found.
     if (messages.warnings.length) {
-      gutil.log(color.yellow("Compiled with warnings.\n"));
+      log(chalk.yellow("Compiled with warnings.\n"));
       messages.warnings.forEach(message => {
-        gutil.log(message);
-        gutil.log();
+        log(message);
+        log();
       });
 
       // Teach some ESLint tricks.
-      gutil.log('You may use special comments to disable some warnings.');
-      gutil.log('Use', color.yellow('// eslint-disable-next-line'), 'to ignore the next line.');
-      gutil.log('Use', color.yellow('/* eslint-disable */'), ' to ignore all warnings in a file.');
+      log('You may use special comments to disable some warnings.');
+      log('Use', chalk.yellow('// eslint-disable-next-line'), 'to ignore the next line.');
+      log('Use', chalk.yellow('/* eslint-disable */'), ' to ignore all warnings in a file.');
     }
   });
 
@@ -149,15 +129,33 @@ gulp.task('webpack-dev-server', callback => {
       if (err) throw new gutil.PluginError("webpack-dev-server", err);
 
       openBrowser(appUrl);
-	  });
+    });
 });
 
 
 /*------------------------------*\
-  #TASK.BUILD
+  #BUILD-TASKS
 \*------------------------------*/
 
-gulp.task('build', [ 'webpack:build' ], () => {
+task.is('webpack:build', debug => {
+  task.do('clean-build');
+
+  // if (isInteractive) clearConsole();
+
+  if (debug) process.env.WEBPACK_BUILD = 'debug';
+
+  let config = require(webpackConfig);
+
+  // run webpack
+  webpack(config, (err, stats) => {
+		if (err) throw new gutil.PluginError("webpack:build", err);
+		log("[webpack:build]", stats.toString({ colors: true }));
+  });
+});
+
+task.is('build-pub', () => {
+  task.do('clean-build');
+
   fs.copySync(paths.appPublic, paths.appBuild, {
     preserveTimestamps: true,
     dereference: true,
@@ -168,4 +166,12 @@ gulp.task('build', [ 'webpack:build' ], () => {
     )
   });
 });
+
+task.is('build', () => ['build-pub', 'webpack:build'].forEach(task.do));
+task.is('build:dev', () => {
+  task.do('build-pub');
+  task.do('webpack:build', { debug: true });
+});
+
+task.cli();
 

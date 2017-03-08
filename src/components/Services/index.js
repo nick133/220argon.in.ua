@@ -1,18 +1,7 @@
 import Inferno, { linkEvent } from 'inferno';
 import Component from 'inferno-component';
 
-import './Services.styl';
-
-import * as Defs from '../hostdefs/hostdefs.js';
-
-
-let Com = {
-  headerId: 'main-header',
-
-  // STYLUS css colors
-  initColor:  Defs.defs.init_color,
-  hoverColor: Defs.defs.hover_color,
-};
+import css from './index.styl';
 
 
 /*------------------------------*\
@@ -25,6 +14,7 @@ class Services extends Component {
    *    data = { id, title, image, items } // services JSON
    *    openId = 'alu'
    *    animation = true
+   *    scroll = 80px
    */
   constructor(props) {
     super(props);
@@ -40,9 +30,6 @@ class Services extends Component {
   }
 
   componentDidMount() {
-    this.scrollHeight = -18 - window.getComputedStyle(
-      document.getElementsByClassName(Com.headerId)[0]).height.replace('px', '');
-
     this.reorderItems(this.props.openId);
   }
 
@@ -51,11 +38,12 @@ class Services extends Component {
 
     this.props.data.items.forEach((item, n) => {
       let vItem = (
-        <li id={item.id} className="services-item">
+        <li id={item.id} className={css.item}>
           <ServiceItem
             key={item.id}
             data={item}
             opened={item.id === openId ? true : false}
+            scroll={this.props.scroll}
             onClick={this.handleClick}
           />
         </li>
@@ -71,10 +59,6 @@ class Services extends Component {
 
     if (openId === undefined)
       this.setState({ openedItemDOM: undefined });
-    else {
-      window.location.href = '#' + openId;
-      window.scrollBy(0, this.scrollHeight);
-    }
   }
 
   handleClick(instance, event) {
@@ -98,16 +82,16 @@ class Services extends Component {
 
   render() {
     return(
-      <div className="full-width">
+      <div className={css.services}>
         { this.state.openedItemDOM !== undefined &&
-          <ul className="services--open">{ this.state.openedItemDOM }</ul> }
+          <ul>{ this.state.openedItemDOM }</ul> }
 
         <div className="grid  full-width  items-stretch">
           <div className="col-12  col-sm-6">
-            <ul className="services--rest">{ this.state.itemsDOM }</ul>
+            <ul className={css.services_REST}>{ this.state.itemsDOM }</ul>
           </div>
 
-          <div className="services-banner  /  col-6"
+          <div className={css.banner + '  col-6'}
           style={ 'background-image: url(' + this.props.data.banner + ')' } />
         </div>
       </div>
@@ -124,7 +108,7 @@ class ServiceItem extends Component {
   constructor(props) {
     super(props);
 
-    this._titleClass = 'services-item__header';
+    this._titleClass = css.item__header;
 
     this.state = {
       titleClass: this._titleClass
@@ -132,19 +116,23 @@ class ServiceItem extends Component {
   }
 
   componentDidMount() {
-    if (this.props.opened)
+    if (this.props.opened){
       document.getElementById(this.props.data.id + '_content').style.display = 'flex';
 
-    this.setState({ titleClass: this._titleClass + (this.props.opened ?
-      ' services-item__header--open' : ' services-item__header--close') });
+      window.location.href = '#' + this.props.data.id;
+      window.scrollBy(0, this.props.scroll);
+    }
+
+    this.setState({ titleClass: this._titleClass + ' ' + (this.props.opened ?
+      css.item__header_OPEN : css.item__header_CLOSE) });
   }
 
   render() {
     let item = this.props.data;
     let itemImage = idx => {
       return item.images[idx] === undefined ? '' :
-        '<div class="text-center"><img class="services-item__image' +
-        (idx > 0 ? ' services-item__image--add' : '') + '" src="' +
+        '<div class="text-center"><img class="' + css.itemImage +
+        (idx > 0 ? (' ' + css.itemImage_ADD) : '') + '" src="' +
         item.images[idx] + '" alt="' + item.title + '"></div>';
     }
 
@@ -154,9 +142,9 @@ class ServiceItem extends Component {
           {this.props.data.title}
         </div>
 
-        <div id={this.props.data.id + '_content'} className="services-item__content">
-          <div className="services-item__content-a">
-            <div className="services-item__content-is" dangerouslySetInnerHTML={ {__html:
+        <div id={this.props.data.id + '_content'} className={css.item__content}>
+          <div className={css.item__contentAA}>
+            <div className={css.item__contentIS} dangerouslySetInnerHTML={ {__html:
               itemImage(0) + itemImage(1) +
               this.props.data.header.join('') +
               this.props.data.content.join('')

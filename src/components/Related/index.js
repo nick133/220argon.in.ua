@@ -1,16 +1,14 @@
 import Inferno from 'inferno';
 import Component from 'inferno-component';
 
-import './Related.styl';
-
-//import * as host from './hostlib.js';
+import css from './index.styl';
 
 
 class Related extends Component {
   render() {
     return (
-      <div className="related">
-        <div className="related-title">{this.props.data.title}</div>
+      <div className={css.related}>
+        <div className={css.title}>{this.props.data.title}</div>
         <div className="grid  full-width  items-stretch  justify-center  text-center">
         {
 
@@ -36,13 +34,13 @@ class Related extends Component {
 class RelatedItem extends Component {
   render() {
     return (
-      <div className="related__item  /  col-6  col-sm-4  col-md-3  col-hd-2">
-        <div className="related__item-is">
-          <div className="related__item-title  /  grid  items-center  justify-center  text-center">
+      <div className={css.item + '  col-6  col-sm-4  col-md-3  col-hd-2'}>
+        <div className={css.itemIS}>
+          <div className={css.itemTitle + '  grid  items-center  justify-center  text-center'}>
             <p className="col-auto">{this.props.title}</p>
           </div>
-          <div className="related__item-thumb">
-            <img className="related__item-thumb-is" alt={this.props.title} src={this.props.image} />
+          <div className={css.itemThumb}>
+            <img className={css.itemThumbIS} alt={this.props.title} src={this.props.image} />
           </div>
         </div>
       </div>

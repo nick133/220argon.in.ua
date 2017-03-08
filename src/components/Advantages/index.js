@@ -1,13 +1,13 @@
 import Inferno from 'inferno';
 import Component from 'inferno-component';
 
-import './Advantages.styl';
+import css from './index.styl';
 
 
 class Advantages extends Component {
   render() {
     return (
-      <div class="advantages  /  grid  full-width  items-stretch  text-center">
+      <div class={css.advantages + '  grid  full-width  items-stretch  text-center'}>
       {
 
         this.props.data.items.map((item, n) => {
@@ -31,14 +31,14 @@ class Advantages extends Component {
               <div className="grid  full-width  items-start">
 
                 <div className={parityClassIcon}>
-                  <div className="advntg-ico">
-                    <img src={item.image} className="advntg-ico__svg" alt={item.title} />
+                  <div className={css.icon}>
+                    <img src={item.image} className={css.iconSvg} alt={item.title} />
                   </div>
                 </div>
 
                 <div className={parityClassItem}>
-                  <h3 className="advntg-item-title">{item.title}</h3>
-                  <p className="advntg-item-desc">{item.description}</p>
+                  <h3 className={css.itemTitle}>{item.title}</h3>
+                  <p className={css.itemDesc}>{item.description}</p>
                 </div>
 
               </div>
