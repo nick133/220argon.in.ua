@@ -1,9 +1,28 @@
+/*
+ *  WOLT - minimalistic tasks manager
+ *
+ *  Copyright 2017-present by nick133 <nick133@gmail.com>
+ */
 
-/* -------- Node modules -------- */
-const chalk = require('chalk');
-const lk = require('stylus');
+/** @ignore */
+const chalk = require('chalk'),
+      fs    = require('fs'),
+      glob  = require('glob');
 
-const argv = require('yargs')
+
+/** Container for tasks and dependency tracking
+ *  @private
+ */
+const tasks = {
+  __done__: [], // done tasks
+};
+
+/** Exported methods/vars */
+const task = {};
+
+
+/** @type {Object} *yargs* argv object */
+task.argv = require('yargs')
   .alias({
     't': ['task', 'tasks'],
     'q': ['s', 'quiet', 'silent'],
@@ -20,12 +39,11 @@ const argv = require('yargs')
   .argv;
 
 
-const tasks = {
-  __done__: [], // done tasks
-};
-
-
-const niceTime = () => {
+/** Generates nice colored time
+ *  @return {string} Formatted time [12:34:56]
+ *  @private
+ */
+const niceTime = function() {
   let date = new Date();
 
   let hour = date.getHours();
@@ -40,83 +58,173 @@ const niceTime = () => {
   return '[' + chalk.grey(hour + ':' + min + ':' + sec) + ']';
 }
 
-const log = function() {
-  if (argv.quiet) return;
-  console.log(niceTime() + ' ' + Array.from(arguments).join(' '));
+
+/** Logs anonymous messages
+ *  @param {...string} mesg - Messages
+ *  @example
+ *  task.msg('Message', 'from', 'nowhere');
+ */
+task.msg = function(...mesg) {
+  if (task.argv.quiet) return;
+
+  console.log([niceTime()].concat(mesg).join(' '));
 };
 
-const error = (id, text) => {
-  argv.quiet = false;
-  log(chalk.red('ERROR:'), text, '[' + chalk.cyan(id) + ']');
+
+/** Logs messages from task
+ *  @param {string} from - Task badge
+ *  @param {...string} mesg - Messages
+ *  @example
+ *  task.log('build', 'Build started');
+ */
+task.log = function(from, ...mesg) {
+  task.msg(mesg.join(' '), '[' + chalk.cyan(from) + ']');
+};
+
+
+/** Logs error messages
+ *  @param {string} from - Task badge
+ *  @param {...string} mesg - Error messages
+ */
+task.error = function(from, ...mesg) {
+  task.argv.quiet = false;
+  task.log(from, chalk.red.bold('ERROR:'), mesg.join(' '));
 }
 
 
-//====> task.is()
-const taskIs = (id, batch) => (tasks[id] = batch);
+/** Logs warning messages
+ *  @param {string} from - Task badge
+ *  @param {...string} mesg - Warnings
+ */
+task.warn = function(from, ...mesg) {
+  task.argv.quiet = false;
+  task.log(from, chalk.yellow.bold('WARNING:'), mesg.join(' '));
+}
 
-//====> task.do()
-const taskDo = (id, params = {}) => {
-  if (typeof(tasks[id]) === 'string') return taskDo(tasks[id], params); // Alias
 
-  if (!taskReg(id)) return false; // Already done? Register or quit
-  
-  if (typeof(tasks[id]) !== 'function') {
-    error(id, 'Invalid or undefined task');
-    process.exit(1);
-  }
+/** Defines a task
+ *  @param {string} id - Task name
+ *  @param {function} batch - function associated with a task
+ */
+task.is = function(id, batch) { tasks[id] = batch };
 
-  log('Begin ' + chalk.cyan(id));
+
+/** Executes task
+ *  @param {string} id - Task name
+ *  @param {Object} [params] - Task params
+ *  @param {boolean} [force] - Force execution, no registering, no checks
+ */
+task.do = function(id, params = {}, force = false) {
+  if (typeof(tasks[id]) === 'string') return task.do(tasks[id], params, force); // Alias
+
+  if (!force && !task.reg(id)) return; // Already done? Register or quit
+
+  if (typeof(tasks[id]) !== 'function')
+    throw 'Invalid or undefined task: ' + id;
+
+  task.log(id, 'Begin');
   let ret = tasks[id](params);
-  log('End ' + chalk.cyan(id));
+  task.log(id, 'End');
+
   return ret;
 }
 
-//====> task.done()
-const taskDone = id => (tasks.__done__.indexOf(id) > -1);
+/** Shortcut for forced task execution, see {@link do} */
+task.force = function(id, params = {}) {
+  return task.do(id, params, true);
+};
 
-//====> task.reg()
-const taskReg = id => {
-  if (taskDone(id)) return false;
+
+/** Checks for task status, is it done?
+ *  @param {string} id - Task name
+ *  @return {boolean} *true* if done, *false* if undone */
+task.done = function(id) { return tasks.__done__.indexOf(id) > -1 };
+
+
+/** Registers task as done
+ *  @param {string} id - Task name
+ *  @return {boolean} *true* if success, *false* if task is already done
+ */
+task.reg = function(id) {
+  if (task.done(id)) return false;
 
   tasks.__done__.push(id);
   return true;
 }
 
-//====> task.undo()
-const taskUndo = id => {
-  if (!taskDone(id)) return false;
+
+/** Clears done status for a task
+ *  @param {string} id - Task name
+ *  @return {boolean} *true* if success, *false* if task is not done yet
+ */
+task.undo = function(id) {
+  if (!task.done(id)) return false;
 
   tasks.__done__[tasks.__done__.indexOf(id)] = undefined;
   return true;
 }
 
-//====> task.alias()
-const taskAlias = function(id) {
-  for (let i = 1; i < arguments.length; i++)
-    taskIs(arguments[i], id);
+
+/** Registers alias(es) for a task
+ *  @param {string} id - Task name
+ *  @param {...string} aliases - Task alias(es)
+ *  @example
+ *  task.alias('default', 'build', 'main');
+ */
+task.alias = function(id, ...aliases) {
+  aliases.forEach(alias => task.is(id, alias));
 }
 
-//====> task.cli()
-const taskCli = () => {
-  if (argv.task === undefined)
-    taskDo('default');
+
+/** Checks sources vs destinations last modification times
+ *  @param {string[]} src - Sources globs to check. Can be single string
+ *  @param {string[]} dest - Resulting build files to check. Can be single string
+ *  @param {Object} [options] - Options for *glob.sync()* when matching sources
+ *  @return {boolean} *true* if rebuild is needed, *false* if all files are up to date
+ *  @example
+ *  if (!task.check('src/*.js', 'build/static/main.js') return;
+ */
+task.check = function(src, dest, options = {}) {
+  let lastSrcDate  = 0,
+      lastDestDate = 0;
+
+  let getLastTime = (files, mode) => {
+    let last = 0;
+
+    files.forEach(file => {
+      if (mode && !fs.existsSync(file)) return true; // Needs rebuild (dest mode)
+
+      let ctime = fs.statSync(file).ctime.getTime();
+
+      if (ctime > last) last = ctime;
+    });
+
+    return last;
+  };
+
+  lastDestDate = getLastTime(typeof(dest) === 'string' ? [dest] : dest, true);
+
+  let srcs = [];
+
+  if (typeof(src) === 'string')
+    srcs = glob.sync(src, options);
+  else if (typeof(src) === 'object' && Array.isArray(src))
+    src.forEach(pattern => srcs = srcs.concat(glob.sync(pattern, options)));
+
+  lastSrcDate = getLastTime(srcs);
+
+  return lastSrcDate > lastDestDate;
+};
+
+
+/** Process tasks execution and command line options */
+task.cli = function() {
+  if (task.argv.task === undefined)
+    task.do('default');
   else
-    argv.task.split(',').forEach(taskDo);
+    task.argv.task.split(',').forEach(task.do);
 };
 
 
-module.exports = {
-  argv: argv,
-
-  do:    taskDo,
-  is:    taskIs,
-  alias: taskAlias,
-  done:  taskDone,
-  undo:  taskUndo,
-  reg:   taskReg,
-
-  cli: taskCli,
-  log: log,
-  error: error,
-};
+module.exports = task;
 
