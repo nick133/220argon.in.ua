@@ -12,7 +12,7 @@ class Services extends Component {
   /*
    *  props:
    *    data = { id, title, image, items } // services JSON
-   *    openId = 'alu'
+   *    openId = 'alu' // it's ok if it is invalid, just don't open anything
    *    animation = true
    *    scroll = 80px
    */

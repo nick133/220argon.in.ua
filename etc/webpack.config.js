@@ -17,6 +17,7 @@ const InterpolateHtmlPlugin = require('inferno-dev-utils/InterpolateHtmlPlugin')
 const ManifestPlugin = require('webpack-manifest-plugin');
 
 const paths = require('./paths');
+const pkg = require(paths.appPackageJson);
 
 // Get environment variables to inject into our app.
 var env = process.env;
@@ -26,10 +27,13 @@ if (env.NODE_ENV !== 'production')
 
 
 /* -------- Common pieces -------- */
+
 const postcss_loader = { 
   loader: 'postcss-loader',
   options: {
     plugins: () => [
+      require('postcss-constants'),
+
       require('stylelint')({
         configFile: paths.appEtc + '/stylelint.config.js',
       }),
@@ -53,6 +57,9 @@ const postcss_loader = {
 };
 
 
+/*  Production config (mostly common parts)
+ * ________________________________________________________________ */
+
 webpackConfig = {
   // Don't attempt to continue if there are any errors.
   bail: true,
@@ -64,9 +71,13 @@ webpackConfig = {
   context: __dirname,
   // In production, we only want to load the polyfills and the app code.
 
-  entry: {
-    //    require.resolve('./polyfills'),
-    main: paths.appIndexJs,
+  entry: { 
+    main: env.WEBPACK_DEV_SERVER ?
+      [
+        // require.resolve('./polyfills'),
+        require.resolve('inferno-dev-utils/webpackHotDevClient'),
+        paths.appIndexJs,
+      ] : paths.appIndexJs
   },
 
   output: {
@@ -85,7 +96,9 @@ webpackConfig = {
         test: /\.jsx?$/,
         enforce: 'pre',
         include: paths.appSrc,
-        exclude: /node_modules/,
+        exclude: [
+          /node_modules/,
+        ],
         loader: 'eslint-loader',
         options: {
           useEslintrc: false,
@@ -94,7 +107,7 @@ webpackConfig = {
           configFile: "inferno-app"
         },
       },
-  
+
       // Default loader: load all assets that are not handled by other loaders with the url loader.
       // Note: This list needs to be updated with every change of extensions the other loaders match.
       // E.g., when adding a loader for a new supported file extension,
@@ -208,15 +221,25 @@ webpackConfig = {
   resolve: {
     modules: [
       'node_modules',
-      '../node_modules',
     ],
     extensions: [".js", ".json", ".css", ".styl"],
   },
 
   plugins: [
-    // Get process environment accessible from app
-    //  new webpack.DefinePlugin(process.env),
+    // Variables for *.js modules
+    new webpack.DefinePlugin({
+      DEVEL_MODE: JSON.stringify(env.WEBPACK_BUILD), // MUST be stringified!
+    }),
+
+    //  Get process environment accessible from app
     //  new webpack.EnvironmentPlugin([ "NODE_ENV" ]),
+
+    //  Variables for HTML templates
+    new InterpolateHtmlPlugin({
+      PUBLIC_URL: '/',
+      PROJECT_TITLE: pkg.name,
+      DEVEL_MODE: env.WEBPACK_BUILD,
+    }),
 
     // This helps ensure the builds are consistent if source hasn't changed:
     new webpack.optimize.OccurrenceOrderPlugin(),
@@ -226,11 +249,6 @@ webpackConfig = {
     // having to parse `index.html`.
     new ManifestPlugin({
       fileName: 'asset-manifest.json'
-    }),
-
-    new InterpolateHtmlPlugin({
-      PUBLIC_URL: '/',
-      WEBPACK_BUILD: env.WEBPACK_BUILD,
     }),
 
     // Note: this won't work without ExtractTextPlugin.extract(..) in `loaders`.
@@ -257,15 +275,12 @@ webpackConfig = {
         minifyCSS: true,
         minifyURLs: true
       } : false,
-
-      // Exported variables for template
-      devmode: env.WEBPACK_BUILD === 'debug' ? true : false,
-    })
+    }),
   ],
 
   devServer: {
     hot: true,
-    compress: true,
+    compress: env.WEBPACK_BUILD !== 'debug',
     https: true,
     inline: true,
     quiet: true,
@@ -276,14 +291,33 @@ webpackConfig = {
       index: paths.publicPath,
     },
     watchOptions: {
-      ignored: /node_modules/
+      ignored: /node_modules/,
+      aggregateTimeout: 600,
+      //poll: true,
+    },
+    overlay: {
+      warnings: true,
+      errors: true,
     },
     stats: { colors: true },
   },
+
+  /* Some libraries (i.e. 'tape') import Node modules but don't use them in the browser.
+   * Tell Webpack to provide empty mocks for them so importing them works.
+   */
+  node: {
+    fs: 'empty',
+    net: 'empty',
+    tls: 'empty'
+  }
 };
 
-// Minify the code.
-if (env.WEBPACK_BUILD !== 'debug')
+
+/*  Development config
+ * ________________________________________________________________ */
+
+if (env.WEBPACK_BUILD !== 'debug') {
+  // Minify the code
   webpackConfig.plugins.push(
     new webpack.optimize.UglifyJsPlugin({
       sourceMap: true,
@@ -300,6 +334,7 @@ if (env.WEBPACK_BUILD !== 'debug')
       },
     })
   );
+}
 
 
 module.exports = webpackConfig;

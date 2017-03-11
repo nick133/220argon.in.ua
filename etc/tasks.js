@@ -1,20 +1,26 @@
 
 /* -------- Node modules -------- */
-const chalk = require('chalk'),
-      fs    = require('fs-extra'),
-      path  = require('path'),
-      task  = require('./wolt');
-
-const log = console.log;
+const chalk   = require('chalk'),
+      fs      = require('fs-extra'),
+      path    = require('path'),
+      task    = require('./wolt'),
+      express = require('express'),
+      http    = require('http'),
+      https   = require('https');
 
 const webpack = require('webpack'),
       devServer = require('webpack-dev-server'),
       clearConsole = require('inferno-dev-utils/clearConsole'),
       formatWebpackMessages = require('inferno-dev-utils/formatWebpackMessages'),
+      HtmlWebpackPlugin = require('html-webpack-plugin'),
       openBrowser = require('inferno-dev-utils/openBrowser');
+
+const www = express();
+const log = console.log;
 
 /* -------- Misc configs -------- */
 const paths = require('./paths');
+const pkg = require(paths.appPackageJson);
 
 // Must be set BEFORE webpack config is loaded! Also is needed for Babel.
 process.env.NODE_ENV = 'production';
@@ -26,7 +32,19 @@ const isInteractive = process.stdout.isTTY;
 const host = {
   domain: 'localhost',
   port: 3000,
+  prod: { port: 3030 },
+  dev: { port: 4000 },
+  test: { port: 5000 },
 }
+
+const src = {
+  pub: paths.appPublic + '/**/*',
+  app: paths.appSrc + '/**/*',
+};
+const dest = {
+  html:  paths.appBuild + '/index.html',
+  asset: paths.appBuild + '/asset-manifest.json',
+};
 
 
 /*------------------------------*\
@@ -40,9 +58,11 @@ task.is('default', 'build');
   #CLEAN-TASKS
 \*------------------------------*/
 
-task.is('clean-build', () => fs.emptyDirSync('build'));
+task.is('clean-build', () => fs.emptyDirSync(paths.appBuild));
 
-task.is('cleanall', () => fs.removeSync('build'));
+task.is('cleanall', () => {
+  [ paths.appBuild, '*.log' ].forEach(file => fs.removeSync(file));
+});
 
 
 /*------------------------------*\
@@ -51,27 +71,14 @@ task.is('cleanall', () => fs.removeSync('build'));
 
 task.is('watch', 'webpack-dev-server');
 
-task.is('webpack-dev-server', () => {
-  process.env.WEBPACK_BUILD = 'debug'; // Ensure no minifications/etc at development
-
-	// modify some webpack config options
-  let config = require(webpackConfig);
-	config.devtool = 'eval';
- 
-  let protocol = config.devServer.https ? 'https' : 'http';
-  let appUrl = protocol + '://' + host.domain + ':' + host.port + '/';
-
-  let isFirstCompile = true;
-
-  let compiler = webpack(config);
-
+function setupCompiler(compiler, appUrl) {
   // "invalid" event fires when you have changed a file, and Webpack is
   // recompiling a bundle. WebpackDevServer takes care to pause serving the
   // bundle, so if you refresh, it'll wait instead of serving the old one.
   // "invalid" is short for "bundle invalidated", it doesn't imply any errors.
   compiler.plugin('invalid', () => {
     if (isInteractive) clearConsole();
-    log(chalk.cyan('Compiling...'));
+    task.msg(chalk.cyan('Compiling...'));
   });
 
   // "done" event fires when Webpack has finished recompiling the bundle.
@@ -82,25 +89,24 @@ task.is('webpack-dev-server', () => {
     // them in a readable focused way.
     const messages = formatWebpackMessages(stats.toJson({}, true));
     const isSuccessful = !messages.errors.length && !messages.warnings.length;
-    const showInstructions = isSuccessful && (isInteractive || isFirstCompile);
+    const showInstructions = isSuccessful && (isInteractive);
 
     if (isSuccessful) {
       // Clear console only at success - no lost error messages from linters
       if (isInteractive) clearConsole(); 
 
-      log(chalk.green('Compiled successfully!'));
+      task.msg(chalk.green('Compiled successfully!'));
     }
 
     if (showInstructions) {
-      log("\nThe app is running at:", chalk.cyan(appUrl),
+      task.msg("\nThe app is running at:", chalk.cyan(appUrl),
         "\n\nNote that the development build is not optimized.",
         "\nTo create a production build, use", chalk.cyan('npm run build') + ".\n");
-      isFirstCompile = false;
     }
 
     // If errors exist, only show errors.
     if (messages.errors.length) {
-      log(chalk.red("Failed to compile.\n"));
+      task.msg(chalk.red("Failed to compile.\n"));
       messages.errors.forEach(message => {
         log(message);
         log();
@@ -110,7 +116,7 @@ task.is('webpack-dev-server', () => {
 
     // Show warnings if no errors were found.
     if (messages.warnings.length) {
-      log(chalk.yellow("Compiled with warnings.\n"));
+      task.msg(chalk.yellow("Compiled with warnings.\n"));
       messages.warnings.forEach(message => {
         log(message);
         log();
@@ -122,14 +128,86 @@ task.is('webpack-dev-server', () => {
       log('Use', chalk.yellow('/* eslint-disable */'), ' to ignore all warnings in a file.');
     }
   });
+}
+
+/* -------- Development config -------- */
+
+task.is('webpack-dev-server', () => {
+  process.env.WEBPACK_BUILD = 'debug'; // Ensure no minifications/etc at development
+  process.env.WEBPACK_DEV_SERVER = true;
+
+	// modify some webpack config options
+  let config = require(webpackConfig);
+	config.devtool = 'eval';
+ 
+  let protocol = config.devServer.https ? 'https' : 'http';
+  let appUrl = protocol + '://' + host.domain + ':' + host.port + '/';
+
+  let compiler = webpack(config);
+
+  setupCompiler(compiler, appUrl);
 
 	// Start a webpack-dev-server
   new devServer(compiler, config.devServer)
     .listen(host.port, host.domain, err => {
-      if (err) throw new gutil.PluginError("webpack-dev-server", err);
+      if (err) throw "[webpack-dev-server] " + err;
 
       openBrowser(appUrl);
     });
+});
+
+/* -------- Test config -------- */
+
+task.is('webpack-dev-server:test', () => {
+  process.env.WEBPACK_BUILD = 'debug'; // Ensure no minifications/etc when testing
+  process.env.WEBPACK_DEV_SERVER = true;
+
+	// modify some webpack config options
+  let config = require(webpackConfig);
+	config.devtool = 'eval';
+  config.entry = paths.appTestJs;
+  config.plugins.push(
+    new HtmlWebpackPlugin({
+      inject: 'body',
+      template: paths.appTestHtml,
+      filename: path.basename(paths.appTestHtml),
+      cache: true,
+    })
+  );
+
+  let protocol = config.devServer.https ? 'https' : 'http';
+  let appUrl = protocol + '://' + host.domain + ':' + host.test.port + '/test.html';
+
+  let compiler = webpack(config);
+
+  setupCompiler(compiler, appUrl);
+
+	// Start a webpack-dev-server
+  new devServer(compiler, config.devServer)
+    .listen(host.test.port, host.domain, err => {
+      if (err) throw "[webpack-dev-server:test] " + err;
+
+      openBrowser(appUrl);
+    });
+});
+
+/*------------------------------*\
+  #TASK.PRODUCTION-SERVER
+\*------------------------------*/
+
+task.is('production-server', () => {
+  task.do('build');
+
+  www.use(express.static(paths.appBuild));
+
+  www.get('/*', function (req, res) {
+    res.sendFile(paths.appHtml);
+  });
+
+  http.createServer(www).listen(host.port);
+  https.createServer({ requestCert: true }, www).listen(host.prod.port);
+
+  openBrowser('https://' + host.domain + ':' + host.prod.port);
 });
 
 
@@ -137,41 +215,51 @@ task.is('webpack-dev-server', () => {
   #BUILD-TASKS
 \*------------------------------*/
 
-task.is('webpack:build', obj => {
+task.is('webpack:build', params => {
+  if (!task.check(src.pub, dest.html) &&
+      !task.check(src.app, dest.asset)) {
+    task.log('webpack:build', 'Assets are up to date!');
+    return;
+  }
   task.do('clean-build');
 
   // if (isInteractive) clearConsole();
 
-  if (obj.debug) process.env.WEBPACK_BUILD = 'debug';
+  if (params.debug) process.env.WEBPACK_BUILD = 'debug';
 
   let config = require(webpackConfig);
 
   // run webpack
   webpack(config, (err, stats) => {
 		if (err) throw "[webpack:build] " + err;
-		log("[webpack:build]", stats.toString({ colors: true }));
+		log(stats.toString({ colors: true }));
   });
+
+  task.do('build-pub');
 });
 
 task.is('build-pub', () => {
-  task.do('clean-build');
-
   fs.copySync(paths.appPublic, paths.appBuild, {
     preserveTimestamps: true,
     dereference: true,
     filter: file => (
-      file !== paths.appHtml &&
-      path.basename(file) !== 'Thumbs.db' &&
+      file.search(/\.html$/) === -1 && // Skip templates
+      path.basename(file)    !== 'Thumbs.db' &&
       path.basename(file)[0] !== '.' // exclude .dotfiles
     )
   });
 });
 
-task.is('build', () => ['build-pub', 'webpack:build'].forEach(task.do));
-task.is('build:dev', () => {
-  task.do('build-pub');
-  task.do('webpack:build', { debug: true });
-});
+task.is('build', 'webpack:build');
+
+task.is('build:dev', () => task.do('webpack:build', { debug: true }));
+
+/*------------------------------*\
+  #TEST-TASK
+\*------------------------------*/
+
+task.is('test', 'webpack-dev-server:test');
+
 
 task.cli();
 

@@ -1,5 +1,5 @@
 {
-  "name": "inferno-app",
+  "name": "220argon.in.ua-inferno",
   "version": "0.1.0",
   "private": true,
   "author": "nick133",
@@ -39,15 +39,23 @@
     "stylus-loader": "^2.5.0",
     "url-loader": "^0.5.8",
     "webpack": "^2.0.0",
-    "webpack-dev-server": "^2.4.1",
     "webpack-manifest-plugin": "^1.1.0",
     "yargs": "^7.0.1"
   },
   "scripts": {
     "build": "node etc/tasks --task build",
     "build:dev": "node etc/tasks --task build:dev",
+    "prod": "node etc/tasks --task production-server",
     "start": "node etc/tasks --task webpack-dev-server",
     "clean": "node etc/tasks --task cleanall",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node etc/tasks --task test"
+  },
+  "devDependencies": {
+    "browserify-tape-spec": "^1.1.2",
+    "tap-spec": "^4.1.1",
+    "tap-webpack-plugin": "^2.0.0",
+    "tape": "^4.6.3",
+    "tape-dom": "0.0.12",
+    "webpack-dev-server": "^2.4.1"
   }
 }
