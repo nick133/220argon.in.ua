@@ -45,7 +45,7 @@
             "image" : "/images/related-tokarka-thumb.jpg",
             "disable" : true
         },
-        {   "title" : "Пайка",
+        {   "title" : "Пайка меди, латуни, алюминия",
             "image" : "/images/related-paika-thumb.jpg"
         },
         {   "title" : "Полировка",
@@ -89,15 +89,6 @@
                 "/images/service-alu2.jpg"
             ],
             "header" : [
-              "<h4>Сварка<br>Наплавка<br>Пайка</h4>",
-              "<br>",
-              "<ul class='a-list'>",
-                "<li>алюминия</li>",
-                "<li>алюминиевых сплавов</li>",
-                "<li>дюралей</li>",
-                "<li>авиалей</li>",
-                "<li>силуминов</li>",
-              "</ul>"
             ],
             "content" : [
               "<ul class='b-list'>",
@@ -123,13 +114,6 @@
                 "/images/service-nerzh.jpg"
             ],
             "header" : [
-              "<h4>Сварка<br>Наплавка<br>Полировка</h4>",
-              "<br>",
-              "<ul class='a-list'>",
-                "<li>нержавеющих сталей</li>",
-                "<li>пищевой нержавейки</li>",
-                "<li>технической нержавейки</li>",
-              "</ul>"
             ],
             "content" : [
               "<ul class='b-list'>",
@@ -151,10 +135,6 @@
                 "/images/service-chugun2.jpg"
             ],
             "header" : [
-              "<div><b>Сварка</b> чугуна</div>",
-              "<div><b>Наплавка</b> по чугуну</div>",
-              "<div>Сварка чугуна со сталью</div>",
-              "<br>"
             ],
             "content" : [
               "<ul class='b-list'>",
@@ -173,12 +153,6 @@
                 "/images/service-stal.jpg"
             ],
             "header" : [
-              "<h4>Сварка<br>Наплавка</h4>",
-              "<ul class='a-list'>",
-                "<li>простых сталей</li>",
-                "<li>легированных сталей</li>",
-                "<li>углеродистых сталей</li>",
-              "</ul>"
             ],
             "content" : [
               "<ul class='b-list'>",
@@ -201,10 +175,6 @@
                 "/images/service-copper2.jpg"
             ],
             "header" : [
-              "<h4>Сварка</h4>",
-              "<h4>Наплавка</h4>",
-              "<h4>Пайка</h4>",
-              "<br>"
             ],
             "content" : [
               "<ul class='b-list'>",
@@ -222,10 +192,6 @@
                 "/images/service-latun2.jpg"
             ],
             "header" : [
-              "<h4>Сварка</h4>",
-              "<h4>Наплавка</h4>",
-              "<h4>Пайка</h4>",
-              "<br>"
             ],
             "content" : [
               "<ul class='b-list'>",
@@ -244,9 +210,6 @@
                 "/images/service-bronza2.jpg"
             ],
             "header" : [
-              "<h4>Сварка</h4>",
-              "<h4>Наплавка</h4>",
-              "<br>"
             ],
             "content" : [
               "<ul class='b-list'>",
@@ -264,9 +227,6 @@
                 "/images/service-titan2.jpg"
             ],
             "header" : [
-              "<h4>Сварка</h4>",
-              "<h4>Наплавка</h4>",
-              "<br>"
             ],
             "content" : [
               "<ul class='b-list'>",
