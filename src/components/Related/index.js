@@ -11,18 +11,18 @@ class Related extends Component {
         <div className={css.title}>{this.props.data.title}</div>
         <div className="grid  full-width  items-stretch  justify-center  text-center">
         {
-
-          this.props.data.items.map(item => {
-            let uid = Math.random().toString(36).substr(2, 8);
-  
-            return (<RelatedItem
-              key={uid}
-              id={uid}
-              title={item.title}
-              image={item.image}
-            />);
-          })
-
+          this.props.data.items
+            .filter(i => i.disable !== true)
+            .map(item => {
+              let uid = Math.random().toString(36).substr(2, 8);
+    
+              return (<RelatedItem
+                key={uid}
+                id={uid}
+                title={item.title}
+                image={item.image}
+              />);
+            })
         }
         </div>
       </div>

@@ -31,7 +31,7 @@
     "related" : {
       "title" : "Сопутствующие услуги",
       "items" : [
-        {   "title" : "Инжиниринг",
+        {   "title" : "Проектирование",
             "image" : "/images/related-engineering-thumb.jpg"
         },
         {   "title" : "Фрезерные работы",
@@ -50,13 +50,15 @@
             "image" : "/images/related-lazer-thumb.jpg"
         },
         {   "title" : "Зубонарезка",
-            "image" : "/images/related-zubonarezka-thumb.jpg"
+            "image" : "/images/related-zubonarezka-thumb.jpg",
+            "disable" : true
         },
-        {   "title" : "Плоская шлифовка",
+        {   "title" : "Шлифовка",
             "image" : "/images/related-ploskoshlifovka-thumb.jpg"
         },
         {   "title" : "Круглая шлифовка",
-            "image" : "/images/related-krugloshlifovka-thumb.jpg"
+            "image" : "/images/related-krugloshlifovka-thumb.jpg",
+            "disable" : true
         },
         {   "title" : "Термообработка",
             "image" : "/images/related-termoobrabotka-thumb.jpg"
