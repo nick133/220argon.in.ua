@@ -83,6 +83,7 @@
       "banner" : "/images/banner-welcome.jpg",
       "items" : [
         {   "title" : "алюминий",
+            "titleOpen" : "Сварка алюминия",
             "id" : "alu",
             "images" : [
                 "/images/service-alu2.jpg"
@@ -116,6 +117,7 @@
             ]
         },
         {   "title" : "нерж",
+            "titleOpen" : "Сварка нержавейки",
             "id" : "stainless",
             "images" : [
                 "/images/service-nerzh.jpg"
@@ -142,6 +144,7 @@
             ]
         },
         {   "title" : "чугун",
+            "titleOpen" : "Сварка чугуна",
             "id" : "chugun",
             "images" : [
                 "/images/service-chugun.jpg",
@@ -164,6 +167,7 @@
             ]
         },
         {   "title" : "сталь",
+            "titleOpen" : "Сварка стали",
             "id" : "steel",
             "images" : [
                 "/images/service-stal.jpg"
@@ -190,6 +194,7 @@
             ]
         },
         {   "title" : "медь",
+            "titleOpen" : "Сварка меди",
             "id" : "copper",
             "images" : [
                 "/images/service-copper.jpg",
@@ -210,6 +215,7 @@
             ]
         },
         {   "title" : "латунь",
+            "titleOpen" : "Сварка латуни",
             "id" : "latun",
             "images" : [
                 "/images/service-latun.jpg",
@@ -231,6 +237,7 @@
             ]
         },
         {   "title" : "бронза",
+            "titleOpen" : "Сварка бронзы",
             "id" : "bronza",
             "images" : [
                 "/images/service-bronza.jpg",
@@ -250,6 +257,7 @@
             ]
         },
         {   "title" : "титан",
+            "titleOpen" : "Сварка титана",
             "id" : "titan",
             "images" : [
                 "/images/service-titan.jpg",
