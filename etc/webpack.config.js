@@ -56,7 +56,6 @@ const postcss_loader = {
   },
 };
 
-
 /*  Production config (mostly common parts)
  * ________________________________________________________________ */
 
@@ -69,7 +68,6 @@ webpackConfig = {
   devtool: 'source-map',
 
   context: __dirname,
-  // In production, we only want to load the polyfills and the app code.
 
   entry: { 
     main: env.WEBPACK_DEV_SERVER ?
