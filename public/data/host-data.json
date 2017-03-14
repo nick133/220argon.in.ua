@@ -34,11 +34,16 @@
         {   "title" : "Проектирование",
             "image" : "/images/related-engineering-thumb.jpg"
         },
+        {   "title" : "Механообработка",
+            "image" : "/images/related-mechano-thumb.jpg"
+        },
         {   "title" : "Фрезерные работы",
-            "image" : "/images/related-frezer-thumb.jpg"
+            "image" : "/images/related-frezer-thumb.jpg",
+            "disable" : true
         },
         {   "title" : "Токарные работы",
-            "image" : "/images/related-tokarka-thumb.jpg"
+            "image" : "/images/related-tokarka-thumb.jpg",
+            "disable" : true
         },
         {   "title" : "Пайка",
             "image" : "/images/related-paika-thumb.jpg"
@@ -53,6 +58,9 @@
             "image" : "/images/related-zubonarezka-thumb.jpg",
             "disable" : true
         },
+        {   "title" : "Термообработка",
+            "image" : "/images/related-termoobrabotka-thumb.jpg"
+        },
         {   "title" : "Шлифовка",
             "image" : "/images/related-ploskoshlifovka-thumb.jpg"
         },
@@ -60,11 +68,9 @@
             "image" : "/images/related-krugloshlifovka-thumb.jpg",
             "disable" : true
         },
-        {   "title" : "Термообработка",
-            "image" : "/images/related-termoobrabotka-thumb.jpg"
-        },
         {   "title" : "Гальваническое покрытие",
-            "image" : "/images/related-galvanika-thumb.jpg"
+            "image" : "/images/related-galvanika-thumb.jpg",
+            "disable" : true
         },
         {   "title" : "Покраска",
             "image" : "/images/related-pokraska-thumb.jpg"
@@ -112,7 +118,7 @@
         {   "title" : "нерж",
             "id" : "stainless",
             "images" : [
-                "/images/service-stainless.jpg"
+                "/images/service-nerzh.jpg"
             ],
             "header" : [
               "<h4>Сварка<br>Наплавка<br>Полировка</h4>",
