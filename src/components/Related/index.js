@@ -34,7 +34,7 @@ class Related extends Component {
 class RelatedItem extends Component {
   render() {
     return (
-      <div className={css.item + '  col-6  col-sm-4  col-md-3  col-hd-2'}>
+      <div className={css.item + '  col-6  col-md-4  col-lg-3'}>
         <div className={css.itemIS}>
           <div className={css.itemTitle + '  grid  items-center  justify-center  text-center'}>
             <p className="col-auto">{this.props.title}</p>
