@@ -37,7 +37,24 @@ function parseUrlSearch() {
 
   return parsed;
 };
- 
+
+/** Adds CSS animation to element
+ * @param {string} id - target element id
+ * @param {number} interval - animation interval in seconds
+ * @param {string} effect - animation effect from AnimateCSS
+ */
+function addAnimation(id, interval, effect) {
+  let target = document.getElementById(id);
+  let initClass = target.className;
+
+  let animateIt = () => target.className += '  animated  ' + effect;
+
+  target.addEventListener('animationend', () => target.className = initClass);
+
+  animateIt();
+  setInterval(animateIt, interval * 1000);
+}
+
 
 Axios.get(document.getElementById('host-data').src)
   .then(response => {
@@ -61,19 +78,10 @@ Axios.get(document.getElementById('host-data').src)
 
     browserHotfix();
 
+    /* ---- Price tag/map marker animations ---- */
 
-    /* ---- Map marker icon animation ---- */
-
-    let locateIcon = document.getElementById('locate-icon');
-    let prevLocateClass = locateIcon.className;
-
-    let animateIcon = t => {
-      locateIcon.className += '  animated  bounce';
-      setTimeout(() => { locateIcon.className = prevLocateClass; }, 4000);
-    };
-
-    animateIcon();
-    setInterval(animateIcon, 10000);
+    addAnimation('price-tag', 11, 'bounceIn');
+    addAnimation('locate-icon', 10, 'bounce');
   })
   .catch(error => console.log(error));
 
