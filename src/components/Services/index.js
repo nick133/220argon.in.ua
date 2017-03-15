@@ -139,7 +139,8 @@ class ServiceItem extends Component {
     return (
       <div className="full-width">
         <div className={this.state.titleClass} onClick={ linkEvent(this, this.props.onClick) }>
-          {this.props.opened ? this.props.data.titleOpen : this.props.data.title}
+          { (this.props.opened && this.props.data.titleOpen !== undefined)
+            ? this.props.data.titleOpen : this.props.data.title }
         </div>
 
         <div id={this.props.data.id + '_content'} className={css.item__content}>
