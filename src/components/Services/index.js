@@ -136,11 +136,15 @@ class ServiceItem extends Component {
         item.images[idx] + '" alt="' + item.title + '"></div>';
     }
 
+    let itemTitle = (this.props.opened && this.props.data.titleOpen !== undefined)
+      ? this.props.data.titleOpen : this.props.data.title;
+
+    let titleDots = this.props.opened ? '' : <span class={ css.titleDots }>...</span>;
+
     return (
       <div className="full-width">
         <div className={this.state.titleClass} onClick={ linkEvent(this, this.props.onClick) }>
-          { (this.props.opened && this.props.data.titleOpen !== undefined)
-            ? this.props.data.titleOpen : this.props.data.title }
+          {itemTitle}{titleDots}
         </div>
 
         <div id={this.props.data.id + '_content'} className={css.item__content}>
