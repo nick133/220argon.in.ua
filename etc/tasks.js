@@ -165,7 +165,7 @@ task.is('webpack-dev-server:test', () => {
 	// modify some webpack config options
   let config = require(webpackConfig);
 	config.devtool = 'eval';
-  config.entry = paths.appTestJs;
+  config.entry = [ require.resolve('./polyfills'), paths.appTestJs ];
   config.plugins.push(
     new HtmlWebpackPlugin({
       inject: 'body',
