@@ -69,14 +69,15 @@ webpackConfig = {
 
   context: __dirname,
 
-  entry: { 
-    main: env.WEBPACK_DEV_SERVER ?
-      [
-        // require.resolve('./polyfills'),
-        require.resolve('inferno-dev-utils/webpackHotDevClient'),
-        paths.appIndexJs,
-      ] : paths.appIndexJs
-  },
+  entry: (env.WEBPACK_DEV_SERVER ?
+    [
+      require.resolve('./polyfills'),
+      require.resolve('inferno-dev-utils/webpackHotDevClient'),
+      paths.appIndexJs,
+    ] : [
+      require.resolve('./polyfills'),
+      paths.appIndexJs,
+    ]),
 
   output: {
     // The build folder.
