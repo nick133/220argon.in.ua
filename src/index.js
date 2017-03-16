@@ -80,8 +80,8 @@ Axios.get(document.getElementById('host-data').src)
 
     /* ---- Price tag/map marker animations ---- */
 
-    addAnimation('price-tag', 11, 'bounceIn');
-    addAnimation('locate-icon', 10, 'bounce');
+    addAnimation('price-tag', 3, 'bounceIn');
+    addAnimation('locate-icon', 8, 'bounce');
   })
   .catch(error => console.log(error));
 
