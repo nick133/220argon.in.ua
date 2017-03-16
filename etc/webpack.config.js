@@ -75,7 +75,7 @@ webpackConfig = {
       require.resolve('inferno-dev-utils/webpackHotDevClient'),
       paths.appIndexJs,
     ] : [
-      require.resolve('./polyfills'),
+      require.resolve('./polyfills'), // This is MANDATORY for correct work in IE11
       paths.appIndexJs,
     ]),
 
