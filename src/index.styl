@@ -15,9 +15,10 @@ body, html
   width 100%
   height 100%
   
-// body
+body
+  background-color #eee
+
 //   color text_color
-//   background-color #fff
 //   font-family "Roboto", "Open Sans", "lucida grande", "Segoe UI", arial, verdana, "lucida sans unicode", tahoma, sans-serif
 
 // IE fix for SVG images
@@ -30,20 +31,17 @@ body, html
   #HEADER
 \*------------------------------*/
 
-$header_height = 58px
+$header_height = 72px
 
 .main-header
   height $header_height
-  background-color #eee
-  border-bottom 1px solid #bbb
-  padding 0 180px
+  padding 0 180px 0 12px
   font-weight bold
   font-family sans-serif,Arial,Tahoma,Verdana
   text-transform uppercase
 
-.header-title
-  color lighten(#cc0000, 10%)
-  font-size 50px
+.phone-box
+  padding 10px
 
 .phone-link
   padding 0 24px
@@ -54,18 +52,12 @@ $header_height = 58px
 
 /* -------- Logo -------- */
 .logo
-  z-index 1
-  position absolute
-  top  0
-  left 4px
-
-  width  image_width(path_pub + image_argon_logo)
-  height argon_logo_height
-
-  background-image: url(image_argon_logo)
+  $argon_logo = '/images/argon-logo.png'
+  width image_width(path_pub + $argon_logo)
+  height image_height(path_pub + $argon_logo)
+  background-image url($argon_logo)
   background-repeat no-repeat
-  background-size contain
-  cursor pointer
+  background-position center center
 
 /* -------- Price tag -------- */
 .price-tag
@@ -90,7 +82,7 @@ $new_pricetag_h = 100px
 
 .main-gallery
   position absolute
-  top    $header_height+1
+  top    $header_height
   left   0
   right  0
   bottom 0
@@ -100,29 +92,54 @@ $new_pricetag_h = 100px
   min-height 120px
 
 .gallery-title
+  $shadow_color = #eee
   color #cc0000
-  text-shadow 0 0 6px #eee, 0 0 8px #eee, 0 0 10px #eee, 0 0 12px #eee, 0 0 16px #eee
+  text-shadow 0 0 6px $shadow_color, 0 0 8px $shadow_color, 0 0 10px $shadow_color, 0 0 12px $shadow_color, 0 0 16px $shadow_color
   font-size 48px
   font-weight bold
   font-family sans-serif,Arial,Tahoma,Verdana
   text-transform uppercase
+  padding 16px 140px
 
-.main-pic
+.gallery-box
+  position relative
+
+$cell_padding = 10px
+.gallery-box-is
+  position absolute
+  border 1px solid #ccc
+  border-radius 18px
   background-size cover
   background-repeat no-repeat
   background-position center center
 
-.main-pic--tl
-  background-image url(/images/main-pic-alu.jpg)
+.gallery-box--tl
+  top    0
+  bottom ($cell_padding / 2)
+  left   $cell_padding
+  right  ($cell_padding / 2)
+  background-image url(/images/gallery-alu.jpg)
 
-.main-pic--tr
-  background-image url(/images/main-pic-chugun.jpg)
+.gallery-box--tr
+  top    0
+  bottom ($cell_padding / 2)
+  left   ($cell_padding / 2)
+  right  $cell_padding
+  background-image url(/images/gallery-chugun.jpg)
 
-.main-pic--bl
-  background-image url(/images/main-pic-ss.jpg)
+.gallery-box--bl
+  top    ($cell_padding / 2)
+  bottom $cell_padding
+  left   $cell_padding
+  right  ($cell_padding / 2)
+  background-image url(/images/gallery-ss.jpg)
 
-.main-pic--br
-  background-image url(/images/main-pic-copper2.jpg)
+.gallery-box--br
+  top    ($cell_padding / 2)
+  bottom $cell_padding
+  left   ($cell_padding / 2)
+  right  $cell_padding
+  background-image url(/images/gallery-copper2.jpg)
 
   
 /*------------------------------*\
@@ -142,48 +159,15 @@ $new_pricetag_h = 100px
   background-position center center
 
 
-// 480px
-@media screen and (min-width: sm_grid_width)
-  .find-us
-    top 0
-    bottom auto
-    left  argon_logo_width + 10px
-    right pricetag_width + 10px
-    width auto
-    height header_height
-    background none
+@media screen and (max-width: lg_grid_width)
+  .banner
+    background-size 128px
 
-  .addr-text
-    font-size 18px
-
-  .cell-locate-icon
-    width 24px
-
-  .phone-box
-    padding-left 4px
-    font-size 21px
-
-// 600px
-// @media screen and (max-width: md_grid_width)
-//   .main-pic
-//     background-size 500px
-
-// 720px
-@media screen and (min-width: lg_grid_width)
-  .phone-box
-    font-size 28px
-
-// 800px
-@media screen and (min-width: 800px)
-  .find-us
-    right pricetag_width  + 60px
-    left argon_logo_width + 40px
+  .gallery-title
+    font-size 36px
 
 // 960px
 @media screen and (min-width: 960px)
-  .phone-box
-    font-size 33px
-
   /*---- Also fix price tag ----*/
 
   .price-tag

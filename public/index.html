@@ -37,11 +37,9 @@
     <!-- /Yandex.Metrika counter -->
 <% } %>
 
-    <script id="host-data" type="application/json" src="/data/host-data.json"></script>
+    <!-- <script id="host-data" type="application/json" src="/data/host-data.json"></script> -->
   </head>
   <body>
-
-    <div class="logo"></div>
 
     <div id="price-tag" class="price-tag" onclick="this.className +='  animated  bounceIn'">
       <img src="/images/svg/price-tag.svg" class="price-tag__svg" alt="Цена: от 200 грн/час!">
@@ -53,8 +51,8 @@
 
     <div class="main-header">
       <div class="grid  full-width  full-height  items-center">
-        <div class="col-6  text-left">
-          <div class="header-title">сварка</div>
+        <div class="col-6">
+          <div class="logo"></div>
         </div>
         <div class="col-6  text-right">
           <a class="phone-link" href="tel:+380986957798" title="Позвоните нам!">098-695-77-98</a>
@@ -64,25 +62,36 @@
 
     <!-- ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ -->
 
-    <div class="main-gallery  /  grid  full-width  text-center  items-stretch">
-      <div class="main-pic  main-pic--tl  /  col-6">
-        <div class="title-box  /  grid  items-center">
-          <div class="gallery-title  /  col-12">алюминий</div>
+    <div class="main-gallery  /  grid  full-width  items-stretch">
+      <div class="gallery-box  /  col-6">
+        <div class="gallery-box-is  gallery-box--tl">
+          <div class="title-box  /  grid  items-end">
+            <div class="gallery-title  /  col-12  text-right">алюминий</div>
+          </div>
         </div>
       </div>
-      <div class="main-pic  main-pic--tr  /  col-6">
-        <div class="title-box  /  grid  items-center">
-          <div class="gallery-title  /  col-12">чугун</div>
+
+      <div class="gallery-box  /  col-6">
+        <div class="gallery-box-is  gallery-box--tr">
+          <div class="title-box  /  grid  items-end">
+            <div class="gallery-title  /  col-12  text-left">чугун</div>
+          </div>
         </div>
       </div>
-      <div class="main-pic  main-pic--bl  /  col-6">
-        <div class="title-box  /  grid  items-center">
-          <div class="gallery-title  /  col-12">нержавейка</div>
+
+      <div class="gallery-box  /  col-6">
+        <div class="gallery-box-is  gallery-box--bl">
+          <div class="title-box  /  grid  items-start">
+            <div class="gallery-title  /  col-12  text-right">нержавейка</div>
+          </div>
         </div>
       </div>
-      <div class="main-pic  main-pic--br  /  col-6">
-        <div class="title-box  /  grid  items-center">
-          <div class="gallery-title  /  col-12">медь<br>латунь</div>
+
+      <div class="gallery-box  /  col-6">
+        <div class="gallery-box-is  gallery-box--br">
+          <div class="title-box  /  grid  items-start">
+            <div class="gallery-title  /  col-12  text-left">медь<br>латунь</div>
+          </div>
         </div>
       </div>
     </div>
