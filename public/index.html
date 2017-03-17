@@ -39,96 +39,53 @@
 
     <script id="host-data" type="application/json" src="/data/host-data.json"></script>
   </head>
-  <body class="main">
+  <body>
 
-<!-- ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ -->
-
-    <div class="main-header"></div>
-
-    <div class="logo" onclick="javascript:location.href='#'" title="В начало!"></div>
+    <div class="logo"></div>
 
     <div id="price-tag" class="price-tag" onclick="this.className +='  animated  bounceIn'">
       <img src="/images/svg/price-tag.svg" class="price-tag__svg" alt="Цена: от 200 грн/час!">
     </div>
 
-<!-- ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ -->
+    <div class="banner"></div>
 
-    <div class="find-us  /  grid  full-width  justify-space-between  items-center  text-center">
-      <div class="locate-box  /  col-5  col-sm-12  col-md-5  col-sm-order-2  text-left">
-        <a href="#gmap" class="addr-link" title="Найти нас на карте!">
-          <table cellspacing="0" cellpadding="0">
-            <tr>
-              <td class="cell-locate-icon">
-                <img id="locate-icon" width=24 height=24 src="/images/svg/gmap-marker.svg" class="locate-ico__svg" alt="Как нас найти?">
-              </td>
-              <td class="addr-text">карта</td>
-            </tr>
-          </table>
-        </a>
-      </div>
-      <div class="phone-box  /  col-auto  col-order-1  col-md-order-2  text-right">
-        <a class="phone-link" href="tel:+380986957798" title="Позвоните нам!">098-695-77-98</a>
+    <!-- ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ -->
+
+    <div class="main-header">
+      <div class="grid  full-width  full-height  items-center">
+        <div class="col-6  text-left">
+          <div class="header-title">сварка</div>
+        </div>
+        <div class="col-6  text-right">
+          <a class="phone-link" href="tel:+380986957798" title="Позвоните нам!">098-695-77-98</a>
+        </div>
       </div>
     </div>
 
-<!-- ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ -->
+    <!-- ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ -->
 
-    <div class="welcome">
-      <h1 class="welcome-title">Сварка tig</h1>
-    </div>
-
-    <div id="com-advantages"></div>
-
-    <div id="com-services"></div>
-
-    <div id="com-related"></div>
-
-<!-- ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ -->
-
-    <div id="map" class="map">
-      <div class="map__header">
-        <p class="map__header-is">г. Буча, пер. Героев Майдана, 2 &nbsp; </p>
-        <p class="map__header-is">(12 км по "варшавке" от КП) &nbsp; </p>
-        <div class="map__warn">ПРЕДУПРЕДИТЕ О ВИЗИТЕ ПО ТЕЛЕФОНУ</div>
+    <div class="main-gallery  /  grid  full-width  text-center  items-stretch">
+      <div class="main-pic  main-pic--tl  /  col-6">
+        <div class="title-box  /  grid  items-center">
+          <div class="gallery-title  /  col-12">алюминий</div>
+        </div>
       </div>
-
-      <div id="gmap" class="map__google"></div>
+      <div class="main-pic  main-pic--tr  /  col-6">
+        <div class="title-box  /  grid  items-center">
+          <div class="gallery-title  /  col-12">чугун</div>
+        </div>
+      </div>
+      <div class="main-pic  main-pic--bl  /  col-6">
+        <div class="title-box  /  grid  items-center">
+          <div class="gallery-title  /  col-12">нержавейка</div>
+        </div>
+      </div>
+      <div class="main-pic  main-pic--br  /  col-6">
+        <div class="title-box  /  grid  items-center">
+          <div class="gallery-title  /  col-12">медь<br>латунь</div>
+        </div>
+      </div>
     </div>
-
-<% if (DEVEL_MODE !== 'debug') { %>
-    <script type="text/javascript" async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDX9Jv8joMQuU-p4J2AExNwVmS1HF8guQw&callback=initMap">
-    </script>
-
-    <script type="text/javascript">
-      function initMap() {
-        var posCenter = {lat: 50.54962687407783, lng: 30.22289706268316};
-        var posMarker = {lat: 50.5506, lng: 30.2172};
-
-        var imageBounds = {
-          north: 50.549,
-          east:  30.2897,
-          south: 50.526,
-          west:  30.2429
-        };
-
-        var map = new google.maps.Map(document.getElementById('gmap'), {
-          zoom: 11,
-          center: posCenter,
-          mapTypeId: 'roadmap'
-        });
-
-        var marker = new google.maps.Marker({
-          position: posMarker,
-          map: map,
-          title: 'Наша мастерская'
-        });
-
-        hintOverlay = new google.maps.GroundOverlay('/images/kiev.png', imageBounds);
-        hintOverlay.setMap(map);
-      }
-   </script>
-<% } %>
 
   </body>
 </html>

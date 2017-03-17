@@ -11,44 +11,55 @@ h1, h2, h3, h4, h5, h6
   border 0 none
   padding 0
 
-.main
-  color text_color
-  background-color #fff
-  font-family "Roboto", "Open Sans", "lucida grande", "Segoe UI", arial, verdana, "lucida sans unicode", tahoma, sans-serif
-
-body, html,
-.main-header,
-.find-us,
-.welcome,
-.map
+body, html
   width 100%
-
-.main-header,
-.find-us
-  z-index 1
-  position fixed
-  background color_grey
+  height 100%
   
+// body
+//   color text_color
+//   background-color #fff
+//   font-family "Roboto", "Open Sans", "lucida grande", "Segoe UI", arial, verdana, "lucida sans unicode", tahoma, sans-serif
+
+// IE fix for SVG images
 @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none)
   img[src$=".svg"]
     width 100%
 
+ 
 /*------------------------------*\
   #HEADER
 \*------------------------------*/
 
+$header_height = 58px
+
 .main-header
-  top 0
-  height header_height
-  border 1px solid darken(color_grey, 2%)
+  height $header_height
+  background-color #eee
+  border-bottom 1px solid #bbb
+  padding 0 180px
+  font-weight bold
+  font-family sans-serif,Arial,Tahoma,Verdana
+  text-transform uppercase
 
+.header-title
+  color lighten(#cc0000, 10%)
+  font-size 50px
+
+.phone-link
+  padding 0 24px
+  font-size 40px
+  font-weight bold
+  color #333
+  text-decoration none
+
+/* -------- Logo -------- */
 .logo
-  z-index 2
-  position fixed
+  z-index 1
+  position absolute
   top  0
-  left 0
+  left 4px
 
-  width  image_width( path_pub + image_argon_logo)
+  width  image_width(path_pub + image_argon_logo)
   height argon_logo_height
 
   background-image: url(image_argon_logo)
@@ -56,8 +67,9 @@ body, html,
   background-size contain
   cursor pointer
 
+/* -------- Price tag -------- */
 .price-tag
-  z-index 2
+  z-index 1
   position fixed
   top   0
   right 0
@@ -73,37 +85,62 @@ $new_pricetag_h = 100px
 
 
 /*------------------------------*\
-  #FIND-US
+  #MAIN-PICS
 \*------------------------------*/
 
-.find-us
+.main-gallery
+  position absolute
+  top    $header_height+1
+  left   0
+  right  0
   bottom 0
-  height footer_height
-  font-style normal
 
-.addr-link
-  color #333
-  text-decoration none
-  &:hover
-    color color_red
+.title-box
+  height 100%
+  min-height 120px
 
-.cell-locate-icon
-  width footer_height
-
-.locate-ico__svg
-  width  round(footer_height * 0.8)
-
-.addr-text
-  font-size 24px
-
-.phone-box
-  padding-right 4px
-  font-size 24px
+.gallery-title
+  color #cc0000
+  text-shadow 0 0 6px #eee, 0 0 8px #eee, 0 0 10px #eee, 0 0 12px #eee, 0 0 16px #eee
+  font-size 48px
   font-weight bold
+  font-family sans-serif,Arial,Tahoma,Verdana
+  text-transform uppercase
 
-.phone-link
-  color inherit
-  text-decoration none
+.main-pic
+  background-size cover
+  background-repeat no-repeat
+  background-position center center
+
+.main-pic--tl
+  background-image url(/images/main-pic-alu.jpg)
+
+.main-pic--tr
+  background-image url(/images/main-pic-chugun.jpg)
+
+.main-pic--bl
+  background-image url(/images/main-pic-ss.jpg)
+
+.main-pic--br
+  background-image url(/images/main-pic-copper2.jpg)
+
+  
+/*------------------------------*\
+  #BANNER
+\*------------------------------*/
+
+.banner
+  z-index 1
+  position absolute
+  top $header_height
+  left 0
+  bottom 0
+  right 0
+  $banner_image = '/images/banner-welcome.png'
+  background-image url($banner_image)
+  background-repeat no-repeat
+  background-position center center
+
 
 // 480px
 @media screen and (min-width: sm_grid_width)
@@ -127,31 +164,12 @@ $new_pricetag_h = 100px
     font-size 21px
 
 // 600px
-@media screen and (min-width: md_grid_width)
-  .find-us
-    right pricetag_width + 16px
-
-  .addr-text
-    padding-left 6px
-    font-size 20px
-
-  .phone-box
-    font-size 22px
-    padding 0
-
-  .locate-ico__svg
-    width  footer_height
-    height @width
+// @media screen and (max-width: md_grid_width)
+//   .main-pic
+//     background-size 500px
 
 // 720px
 @media screen and (min-width: lg_grid_width)
-  .find-us
-    right pricetag_width   + 50px
-    left  argon_logo_width + 10px
-
-  .addr-text
-    font-size 24px
-
   .phone-box
     font-size 28px
 
@@ -163,13 +181,6 @@ $new_pricetag_h = 100px
 
 // 960px
 @media screen and (min-width: 960px)
-  .find-us
-    left 25%
-    right 22%
-
-  .addr-text
-    font-size 28px
-
   .phone-box
     font-size 33px
 
@@ -179,64 +190,3 @@ $new_pricetag_h = 100px
     top 1%
     right 1%
 
-
-/*------------------------------*\
-  #WELCOME
-\*------------------------------*/
-
-.welcome
-  margin-top header_height
-  text-align center
-
-.welcome-title
-  padding-top 8px
-  line-height 56px
-  font-size 46px
-  font-weight 900
-  font-family "Roboto", "Open Sans", "lucida grande", "Segoe UI", arial, verdana, "lucida sans unicode", tahoma, sans-serif
-  color color_red
-  text-transform uppercase
-  text-shadow 2px 2px 4px #aaa
-
-
-/*------------------------------*\
-  #GOOGLE-MAP
-\*------------------------------*/
-
-.map
-  text-align center
-  padding 16px 0 footer_height
-
-.map__header
-  padding-bottom 6px
-  font-size 20px
-
-.map__google
-  width 100%
-  height 280px
-  background-color color_grey
-
-.map__warn
-  padding 6px 0
-  color color_red
-  font-size 18px
-  font-family "Roboto Condensed"
-  font-style normal
-  font-weight bold
-
-@media screen and (min-width: sm_grid_width)
-  .map
-    padding-bottom 0
-  
-@media screen and (min-width: lg_grid_width)
-  .map__header
-    padding 24px 0 6px
-    font-size 24px
-
-  .map__header-is
-    display inline-block
-
-  .map__warn
-    padding 12px 0
-    font-size 24px
-    font-family Roboto
