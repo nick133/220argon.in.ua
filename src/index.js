@@ -1,15 +1,12 @@
 import './index.styl';
 
 
-
 // import Inferno from 'inferno';
 // import Axios   from 'axios';
 //
 // import Advantages from './components/Advantages';
 // import Services   from './components/Services';
 // import Related    from './components/Related';
-//
-//
 //
 /*
  *  Hotfix browser related shit
@@ -40,50 +37,70 @@ import './index.styl';
 //
 //   return parsed;
 // };
-//
-/** Adds CSS animation to element
- * @param {string} id - target element id
- * @param {number} interval - animation interval in seconds
- * @param {string} effect - animation effect from AnimateCSS
+
+[ 'alu' ].forEach(id => {
+  let link  = document.getElementsByClassName('js-link-'  + id)[0];
+  let popup = document.getElementsByClassName('js-popup-' + id)[0];
+
+  link.addEventListener('click', () => {
+    popup.style.display = 'block';
+    popup.style.opacity = 1;
+  });
+  popup.addEventListener('click', () => {
+    popup.style.display = 'none';
+    popup.style.opacity = 0;
+  });
+});
+
+
+/**
+ *  Set animation
  */
-// function addAnimation(id, interval, effect) {
-//   let target = document.getElementById(id);
-//   let initClass = target.className;
-//
-//   let animateIt = () => target.className += '  animated  ' + effect;
-//
-//   target.addEventListener('animationend', () => target.className = initClass);
-//
-//   animateIt();
-//   setInterval(animateIt, interval * 1000);
-// }
-//
-//
+
+const elemPhone     = document.getElementById('phone'),
+      elemPhoneLink = document.getElementsByClassName('phone')[0],
+      elemPrice  = document.getElementById('price-tag'),
+      elemWelder = document.getElementById('banner-welder');
+
+const classPrice  = elemPrice.className,
+      classWelder = elemWelder.className;
+
+/* -------- OnScroll phone animation -------- */
+const initPhone = {
+  className: elemPhone.className,
+  color:     elemPhoneLink.style.color,
+};
+
+elemPhone.addEventListener('animationend', () => {
+  elemPhone.className = initPhone.className;
+  elemPhoneLink.style.color = initPhone.color;
+});
+
+document.addEventListener('wheel', () => {
+  elemPhoneLink.style.color = '#cc0000';
+  elemPhone.className += '  animated  tada';
+});
+
+/* -------- Price tag animation -------- */
+elemPrice.addEventListener('animationend',  () => elemPrice.className  = classPrice);
+
+const animatePrice = () => elemPrice.className += '  animate-price';
+
+elemPrice.addEventListener('click', animatePrice);
+
+animatePrice();
+setInterval(animatePrice, 5000);
+
+/* -------- Banner welder animation -------- */
+elemWelder.addEventListener('animationend', () => elemWelder.className = classWelder);
+
+elemWelder.addEventListener('click', () => elemWelder.className += '  animate-welder');
+
+
+
 // Axios.get(document.getElementById('host-data').src)
 //   .then(response => {
 //     let uSearch = parseUrlSearch();
-//     let scroll = -18 - window
-//       .getComputedStyle(document.getElementsByClassName('main-header')[0], null)
-//       .getPropertyValue('height')
-//       .replace('px', '');
-//
-//     [ [ 'com-advantages', <Advantages data={ response.data.blocks.advantages } /> ],
-//
-//       [ 'com-services', <Services
-//           openId={ (uSearch.go !== undefined && uSearch.go.length > 1) ? uSearch.go : '' }
-//           data={ response.data.blocks.services }
-//           scroll={ scroll }
-//         /> ],
-//
-//       [ 'com-related', <Related data={ response.data.blocks.related } /> ],
-//
-//     ].forEach( component => Inferno.render(component[1], document.getElementById(component[0])) );
-//
 //     browserHotfix();
-//
-//     [> ---- Price tag/map marker animations ---- <]
-//
-//     addAnimation('price-tag', 8, 'bounceIn');
-//     setTimeout(() => addAnimation('locate-icon', 8, 'bounce'), 4000);
 //   })
 //   .catch(error => console.log(error));

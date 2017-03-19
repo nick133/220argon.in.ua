@@ -13,8 +13,7 @@
     <meta name="description" content="220argon, услуги сварки нержавейки и аллюминия аргоном">
 
     <link rel="dns-prefetch" href="//fonts.googleapis.com">
-    <link rel="stylesheet" 
-      href="https://fonts.googleapis.com/css?family=Roboto+Condensed:700|Roboto:400,500,700,900&subset=cyrillic">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:500,700,900&subset=cyrillic">
 
     <link rel="stylesheet" href="/styles/juist.min.css">
     <link rel="stylesheet" href="/styles/animate.min.css">
@@ -41,60 +40,80 @@
   </head>
   <body>
 
-    <div id="price-tag" class="price-tag" onclick="this.className +='  animated  bounceIn'">
-      <img src="/images/svg/price-tag.svg" class="price-tag__svg" alt="Цена: от 200 грн/час!">
+    <div id="price-tag" class="price-tag">
+      <img src="/images/svg/price-tag.svg" class="price-tag__svg" alt="Цена: от 100 грн/час!">
     </div>
-
-    <div class="banner"></div>
 
     <!-- ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ -->
 
     <div class="main-header">
-      <div class="grid  full-width  full-height  items-center">
-        <div class="col-6">
+      <div class="grid  full-width  full-height  items-center  justify-space-between">
+        <div class="col-12  col-xl-5">
           <div class="logo"></div>
         </div>
-        <div class="col-6  text-right">
-          <a class="phone-link" href="tel:+380986957798" title="Позвоните нам!">098-695-77-98</a>
+        <div class="col-auto">
+          <div id="phone">
+            <a class="phone" href="tel:+380986957798" title="Позвоните нам!">098-695-77-98</a>
+          </div>
         </div>
       </div>
     </div>
 
     <!-- ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ -->
 
-    <div class="main-gallery  /  grid  full-width  items-stretch">
-      <div class="gallery-box  /  col-6">
-        <div class="gallery-box-is  gallery-box--tl">
-          <div class="title-box  /  grid  items-end">
-            <div class="gallery-title  /  col-12  text-right">алюминий</div>
-          </div>
-        </div>
+    <div class="main-gallery">
+      <div class="banner">
+        <div id="banner-welder" class="banner-is"></div>
       </div>
 
-      <div class="gallery-box  /  col-6">
-        <div class="gallery-box-is  gallery-box--tr">
-          <div class="title-box  /  grid  items-end">
-            <div class="gallery-title  /  col-12  text-left">чугун</div>
-          </div>
-        </div>
-      </div>
+      <div class="grid  full-width  full-height  items-stretch">
 
-      <div class="gallery-box  /  col-6">
-        <div class="gallery-box-is  gallery-box--bl">
-          <div class="title-box  /  grid  items-start">
-            <div class="gallery-title  /  col-12  text-right">нержавейка</div>
+        <div class="gallery-box  /  col-12  col-md-6">
+          <div class="gallery-box-is  gallery-box--tl">
+            <div class="grid  items-end  full-height">
+              <div class="gallery-title  /  col-12">
+                <span class="gallery-link  /  js-link-alu">алюминий</span>
+              
+                <div class="gallery-modal  /  js-popup-alu">
+                  <div class="gallery-modal-is">
+                    <div class="modal-image  modal-image--alu"></div>
+                    <div class="modal-text">
+                      сварка наплавка<br>
+                      пайка алюминия
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
+  
+        <div class="gallery-box  /  col-12  col-md-6">
+          <div class="gallery-box-is  gallery-box--tr">
+            <div class="grid  items-end  full-height">
+              <div class="gallery-title  /  col-12">чугун</div>
+            </div>
+          </div>
+        </div>
+  
+        <div class="gallery-box  /  col-12  col-md-6">
+          <div class="gallery-box-is  gallery-box--bl">
+            <div class="grid  items-end  full-height">
+              <div class="gallery-title  /  col-12">нержавейка</div>
+            </div>
+          </div>
+        </div>
+  
+        <div class="gallery-box  /  col-12  col-md-6">
+          <div class="gallery-box-is  gallery-box--br">
+            <div class="grid  items-end  full-height">
+              <div class="gallery-title  /  col-12">медь<br>латунь</div>
+            </div>
+          </div>
+        </div>
 
-      <div class="gallery-box  /  col-6">
-        <div class="gallery-box-is  gallery-box--br">
-          <div class="title-box  /  grid  items-start">
-            <div class="gallery-title  /  col-12  text-left">медь<br>латунь</div>
-          </div>
-        </div>
-      </div>
-    </div>
+      </div><!-- /grid -->
+    </div><!-- /main-gallery -->
 
   </body>
 </html>

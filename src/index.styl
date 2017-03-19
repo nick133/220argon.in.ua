@@ -31,53 +31,50 @@ body
   #HEADER
 \*------------------------------*/
 
-$header_height = 72px
+$header_height = 54px
 
 .main-header
   height $header_height
-  padding 0 180px 0 12px
+  padding 0 64px 0 12px
   font-weight bold
-  font-family sans-serif,Arial,Tahoma,Verdana
+  font-family Roboto,sans-serif,Arial,Tahoma,Verdana
   text-transform uppercase
 
-.phone-box
-  padding 10px
-
-.phone-link
-  padding 0 24px
-  font-size 40px
+/* -------- Phone -------- */
+.phone
+  font-size 44px
   font-weight bold
   color #333
   text-decoration none
 
 /* -------- Logo -------- */
+$argon_logo = '/images/argon-logo.png'
+$logo_width  = image_width(path_pub + $argon_logo)
+$logo_height = image_height(path_pub + $argon_logo)
+
 .logo
-  $argon_logo = '/images/argon-logo.png'
-  width image_width(path_pub + $argon_logo)
-  height image_height(path_pub + $argon_logo)
+  width  $logo_width
+  height $logo_height
   background-image url($argon_logo)
   background-repeat no-repeat
   background-position center center
+  background-size contain
 
 /* -------- Price tag -------- */
+$price_width = 200px
+
 .price-tag
-  z-index 1
+  z-index 2
   position fixed
   top   0
-  right 0
-  &:hover
-    cursor pointer
+  left  0
+  cursor pointer
 
-$new_pricetag_h = 100px
 .price-tag__svg
-  height 72px
-  margin-top -2px
-  @media screen and (min-width: lg_grid_width)
-    height $new_pricetag_h
-
+  width $price_width
 
 /*------------------------------*\
-  #MAIN-PICS
+  #GALLERY
 \*------------------------------*/
 
 .main-gallery
@@ -87,24 +84,74 @@ $new_pricetag_h = 100px
   right  0
   bottom 0
 
-.title-box
-  height 100%
-  min-height 120px
-
 .gallery-title
-  $shadow_color = #eee
+  $shadow_color = #fff
   color #cc0000
   text-shadow 0 0 6px $shadow_color, 0 0 8px $shadow_color, 0 0 10px $shadow_color, 0 0 12px $shadow_color, 0 0 16px $shadow_color
   font-size 48px
   font-weight bold
   font-family sans-serif,Arial,Tahoma,Verdana
   text-transform uppercase
-  padding 16px 140px
+  padding-top 16px
+  padding-bottom @padding-top
 
+.gallery-link
+  cursor pointer
+
+/* -------- Modal -------- */
+.gallery-modal
+  z-index 9
+  display none
+  position fixed
+  top    0
+  bottom 0
+  left   0
+  right  0
+  opacity 0
+  padding 40px 10%
+  background rgba(0, 0, 0, 0.65)
+  transition opacity 1s
+
+.gallery-modal-is
+  position relative
+  width  100%
+  height 100%
+  background #eee
+  border-radius 4px
+  border 1px solid #ddd
+  text-align center
+
+$modal_text_height = 96px
+$modal_padding = 16px
+.modal-image
+  position absolute
+  top    $modal_padding
+  left   @top
+  right  @top
+  bottom ($modal_text_height + $modal_padding)
+  background-size cover
+  background-repeat no-repeat
+  background-position center center
+
+.modal-text
+  position absolute
+  top    auto
+  left   $modal_padding
+  right  @left
+  bottom @left
+  height $modal_text_height
+  color #000
+  font-size 40px
+
+.modal-image--alu
+  background-image url(/images/gallery-alu.jpg)
+
+/* -------- Container -------- */
 .gallery-box
   position relative
 
-$cell_padding = 10px
+$cell_padding  = 10px
+$title_padding = 20px
 .gallery-box-is
   position absolute
   border 1px solid #ccc
@@ -119,6 +166,8 @@ $cell_padding = 10px
   left   $cell_padding
   right  ($cell_padding / 2)
   background-image url(/images/gallery-alu.jpg)
+  padding-left $title_padding
+  text-align left
 
 .gallery-box--tr
   top    0
@@ -126,6 +175,8 @@ $cell_padding = 10px
   left   ($cell_padding / 2)
   right  $cell_padding
   background-image url(/images/gallery-chugun.jpg)
+  padding-right $title_padding
+  text-align right
 
 .gallery-box--bl
   top    ($cell_padding / 2)
@@ -133,6 +184,8 @@ $cell_padding = 10px
   left   $cell_padding
   right  ($cell_padding / 2)
   background-image url(/images/gallery-ss.jpg)
+  padding-right $title_padding
+  text-align right
 
 .gallery-box--br
   top    ($cell_padding / 2)
@@ -140,37 +193,153 @@ $cell_padding = 10px
   left   ($cell_padding / 2)
   right  $cell_padding
   background-image url(/images/gallery-copper2.jpg)
+  padding-left $title_padding
+  text-align left
 
   
 /*------------------------------*\
   #BANNER
 \*------------------------------*/
 
+$banner_size = 220px
+$banner_padding = 12px
+$banner_image = '/images/banner-welder.jpg'
+
 .banner
   z-index 1
   position absolute
-  top $header_height
-  left 0
-  bottom 0
-  right 0
-  $banner_image = '/images/banner-welcome.png'
+  top  50%
+  left @top
+  border-radius ($banner_size / 2)
+  margin-top  -@border-radius
+  margin-left @margin-top
+  width  $banner_size
+  height @width
+  background #fff
+
+.banner-is
+  border-radius (($banner_size - $banner_padding * 2) / 2)
+  width  ($banner_size - $banner_padding * 2)
+  height @width
+  margin $banner_padding auto auto $banner_padding
   background-image url($banner_image)
   background-repeat no-repeat
   background-position center center
+  background-size cover
+  box-shadow 0 0 4px #999
+  cursor pointer
 
 
-@media screen and (max-width: lg_grid_width)
+/*------------------------------*\
+  #RESPONSIVE
+\*------------------------------*/
+
+@media screen and (max-width: 900px)
+  .gallery-title
+    font-size 42px
+
+@media screen and (min-width: 800px)
+  .logo
+    display none
+
+@media screen and (max-width: 800px)
+  $header_height2 = 100px
+  $price_width2   = 160px
+  .phone
+    font-size 36px
+
   .banner
-    background-size 128px
+    display none
 
+  .price-tag
+    right 0
+    left auto
+
+  .price-tag__svg
+    width $price_width2
+
+  .main-header
+    height $header_height2
+
+  .main-gallery
+    top $header_height2
+
+  .gallery-title
+    font-size 40px
+    text-align center
+
+@media screen and (max-width: 640px)
   .gallery-title
     font-size 36px
 
-// 960px
-@media screen and (min-width: 960px)
-  /*---- Also fix price tag ----*/
+@media screen and (max-width: 560px)
+  $header_height3 = 80px
+  .main-header
+    height $header_height3
 
-  .price-tag
-    top 1%
-    right 1%
+  .main-gallery
+    top $header_height3
 
+  .gallery-box--tr, .gallery-box--bl
+    padding-left 20px
+
+  .gallery-title
+    text-align left
+
+  .logo
+    $factor = 0.65
+    width  round($logo_width  * $factor)
+    height round($logo_height * $factor)
+
+
+/*------------------------------*\
+  #ANIMATION
+\*------------------------------*/
+
+/* -------- Price tag -------- */
+@keyframes host-pulse {
+  from, 0%, 20%, 40%, to {
+    animation-timing-function ease-in-out
+  }
+  0% {
+    transform scale(1.2)
+  }
+  20% {
+    transform scale(1.1)
+  }
+  40% {
+    transform scale(1.4)
+  }
+  to {
+    transform scale(1)
+  }
+}
+
+.animate-price
+  animation-duration 1.5s
+  animation-fill-mode both
+  animation-name host-pulse
+
+/* -------- Welder -------- */
+@keyframes host-pulseBig {
+  from, 0%, 20%, 40%, to {
+    animation-timing-function ease-in-out
+  }
+  0% {
+    transform scale(2.3)
+  }
+  20% {
+    transform scale(2.2)
+  }
+  40% {
+    transform scale(2.5)
+  }
+  to {
+    transform scale(1)
+  }
+}
+
+.animate-welder
+  animation-duration 2.5s
+  animation-fill-mode both
+  animation-name host-pulseBig
