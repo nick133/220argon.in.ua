@@ -77,7 +77,7 @@ elemPhone.addEventListener('animationend', () => {
 });
 
 document.addEventListener('wheel', () => {
-  elemPhoneLink.style.color = '#cc0000';
+  //  elemPhoneLink.style.color = 'blue';
   elemPhone.className += '  animated  tada';
 });
 

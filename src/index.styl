@@ -1,5 +1,45 @@
+/*------------------------------*\
+  #HOST-JS-SHARED-VARIABLES
+\*------------------------------*/
 
-@require "hostlib.styl"
+text_color = #333
+color_red = #cc0000
+
+// background rgba(230,230,230,0.95)
+color_grey = rgb(225,225,225)
+
+// JuicedCSS grid responsive sizes (max-width: 1170px)
+xs_grid_width = 360px
+sm_grid_width = 480px
+md_grid_width = 600px
+lg_grid_width = 720px
+xl_grid_width = 800px
+hd_grid_width = 960px
+
+
+/*------------------------------*\
+  #HOST-VARIABLES/FUNCTIONS
+\*------------------------------*/
+
+
+path_pub = '../public'
+
+header_height = 54px
+footer_height = 28px
+
+image_pricetag    = '/images/svg/price-tag.svg'
+pricetag_height   = image_height(path_pub + image_pricetag)
+pricetag_width    = image_width(path_pub + image_pricetag)
+
+image_argon_logo  = '/images/argon-logo.png'
+argon_logo_height = image_height(path_pub + image_argon_logo)
+argon_logo_width  = image_width(path_pub + image_argon_logo)
+
+image_width(img)
+  return image-size(img)[0]
+  
+image_height(img)
+  return image-size(img)[1]
 
 /*------------------------------*\
   #COMMON
@@ -31,20 +71,31 @@ body
   #HEADER
 \*------------------------------*/
 
-$header_height = 54px
+// $header_height = 54px
 
-.main-header
-  height $header_height
-  padding 0 64px 0 12px
-  font-weight bold
-  font-family Roboto,sans-serif,Arial,Tahoma,Verdana
-  text-transform uppercase
+// .main-header
+//   height $header_height
+//   padding 0 64px 0 12px
+//   font-weight bold
+//   font-family Roboto,sans-serif,Arial,Tahoma,Verdana
+//   text-transform uppercase
 
 /* -------- Phone -------- */
 .phone
-  font-size 44px
+  z-index 1
+  position absolute
+  top 28px
+  left 50%
+  right auto
+  bottom auto
+  padding-left 36px
+  font-family Roboto,sans-serif,Arial,Tahoma,Verdana
+  font-size 48px
   font-weight bold
-  color #333
+  // color #333
+  $shadow_color = #fff
+  color #ee0405
+  text-shadow 0 0 6px $shadow_color, 0 0 8px $shadow_color, 0 0 16px $shadow_color, 0 0 24px $shadow_color, 0 0 28px $shadow_color, 0 0 32px $shadow_color
   text-decoration none
 
 /* -------- Logo -------- */
@@ -67,7 +118,8 @@ $price_width = 200px
   z-index 2
   position fixed
   top   0
-  left  0
+  left  50%
+  margin-left -(round($price_width * 1.1))
   cursor pointer
 
 .price-tag__svg
@@ -77,16 +129,20 @@ $price_width = 200px
   #GALLERY
 \*------------------------------*/
 
+$cell_padding  = 10px
+$title_padding = 20px
+
 .main-gallery
   position absolute
-  top    $header_height
+  top    $cell_padding
   left   0
   right  0
   bottom 0
 
 .gallery-title
   $shadow_color = #fff
-  color #cc0000
+  //color #cc0000
+  color blue
   text-shadow 0 0 6px $shadow_color, 0 0 8px $shadow_color, 0 0 10px $shadow_color, 0 0 12px $shadow_color, 0 0 16px $shadow_color
   font-size 48px
   font-weight bold
@@ -150,8 +206,6 @@ $modal_padding = 16px
 .gallery-box
   position relative
 
-$cell_padding  = 10px
-$title_padding = 20px
 .gallery-box-is
   position absolute
   border 1px solid #ccc
@@ -167,7 +221,7 @@ $title_padding = 20px
   right  ($cell_padding / 2)
   background-image url(/images/gallery-alu.jpg)
   padding-left $title_padding
-  text-align left
+  text-align center
 
 .gallery-box--tr
   top    0
@@ -176,7 +230,8 @@ $title_padding = 20px
   right  $cell_padding
   background-image url(/images/gallery-chugun.jpg)
   padding-right $title_padding
-  text-align right
+  text-align center
+
 
 .gallery-box--bl
   top    ($cell_padding / 2)
@@ -201,7 +256,7 @@ $title_padding = 20px
   #BANNER
 \*------------------------------*/
 
-$banner_size = 220px
+$banner_size = 320px
 $banner_padding = 12px
 $banner_image = '/images/banner-welder.jpg'
 
@@ -322,17 +377,14 @@ $banner_image = '/images/banner-welder.jpg'
 
 /* -------- Welder -------- */
 @keyframes host-pulseBig {
-  from, 0%, 20%, 40%, to {
+  from, 0%, 40%, to {
     animation-timing-function ease-in-out
   }
   0% {
-    transform scale(2.3)
-  }
-  20% {
-    transform scale(2.2)
+    transform scale(1.2)
   }
   40% {
-    transform scale(2.5)
+    transform scale(1.6)
   }
   to {
     transform scale(1)
