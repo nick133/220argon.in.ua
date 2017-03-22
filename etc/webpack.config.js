@@ -119,6 +119,7 @@ webpackConfig = {
         	colons: "always",
           // duplicates: true,
           semicolons: "never",
+          colons: "never",
           trailingWhitespace: "never",
         },
       },
