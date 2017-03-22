@@ -8,19 +8,19 @@
  */
 
 const webpack = require('webpack');
-const url = require('url');
-const crypto = require('crypto');
+const url     = require('url');
+const crypto  = require('crypto');
 
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin     = require('extract-text-webpack-plugin');
+const HtmlWebpackPlugin     = require('html-webpack-plugin');
 const InterpolateHtmlPlugin = require('inferno-dev-utils/InterpolateHtmlPlugin');
-const ManifestPlugin = require('webpack-manifest-plugin');
+const ManifestPlugin        = require('webpack-manifest-plugin');
 
 const paths = require('./paths');
 const pkg = require(paths.appPackageJson);
 
 // Get environment variables to inject into our app.
-var env = process.env;
+const env = process.env;
 
 if (env.NODE_ENV !== 'production')
   throw new Error('Production builds must have NODE_ENV=production. (NODE_ENV="' + env.NODE_ENV + '")');
@@ -90,6 +90,8 @@ webpackConfig = {
 
   module: {
     rules: [
+      /* -------- BEGIN PRELOAD -------- */
+
       //====> ESLint JS check first of all
       {
         test: /\.jsx?$/,
@@ -106,6 +108,22 @@ webpackConfig = {
           configFile: "inferno-app"
         },
       },
+
+      //====> STYLUS lint
+      {
+        test: /\.styl$/, 
+        enforce: 'pre',
+        loader: 'stylint-loader',
+        options: {
+          brackets: "never",
+        	colons: "always",
+          // duplicates: true,
+          semicolons: "never",
+          trailingWhitespace: "never",
+        },
+      },
+
+      /* -------- END PRELOAD -------- */
 
       // Default loader: load all assets that are not handled by other loaders with the url loader.
       // Note: This list needs to be updated with every change of extensions the other loaders match.
@@ -165,7 +183,7 @@ webpackConfig = {
         }),
       },
 
-      //====> Extract STYLUS CSS and use CSS modules for components
+      //====> STYLUS styles for components (CSS Modules + CSS constants support)
       {
         test: /\.styl$/,
         include: paths.appComponents,
@@ -194,9 +212,10 @@ webpackConfig = {
           fallback: "style-loader",
         }),
       },
+      //====> Global STYLUS styles
       {
         test: /\.styl$/,
-        exclude: paths.appComponents,
+        exclude: paths.appComponents, // All STYLUS styles except components
         loader: ExtractTextPlugin.extract({
           use: [
             {
@@ -225,7 +244,7 @@ webpackConfig = {
   },
 
   plugins: [
-    // Variables for *.js modules
+    // Variables for Javascript namespace
     new webpack.DefinePlugin({
       DEVEL_MODE: JSON.stringify(env.WEBPACK_BUILD), // MUST be stringified!
     }),
@@ -247,7 +266,7 @@ webpackConfig = {
     // to their corresponding output file so that tools can pick it up without
     // having to parse `index.html`.
     new ManifestPlugin({
-      fileName: 'asset-manifest.json'
+      fileName: 'asset-manifest.json',
     }),
 
     // Note: this won't work without ExtractTextPlugin.extract(..) in `loaders`.
@@ -272,7 +291,7 @@ webpackConfig = {
         keepClosingSlash: true,
         minifyJS: true,
         minifyCSS: true,
-        minifyURLs: true
+        minifyURLs: true,
       } : false,
     }),
   ],
@@ -305,9 +324,9 @@ webpackConfig = {
    * Tell Webpack to provide empty mocks for them so importing them works.
    */
   node: {
-    fs: 'empty',
+    fs:  'empty',
     net: 'empty',
-    tls: 'empty'
+    tls: 'empty',
   }
 };
 
@@ -322,14 +341,14 @@ if (env.WEBPACK_BUILD !== 'debug') {
       sourceMap: true,
       compress: {
         screw_ie8: true, // Inferno doesn't support IE8
-        warnings: false
+        warnings: false,
       },
       mangle: {
-        screw_ie8: true
+        screw_ie8: true,
       },
       output: {
         comments: false,
-        screw_ie8: true
+        screw_ie8: true,
       },
     })
   );
