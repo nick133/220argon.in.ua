@@ -1,41 +1,23 @@
 /*------------------------------*\
-  #HOST-JS-SHARED-VARIABLES
+  #VARIABLES/FUNCTIONS
 \*------------------------------*/
 
-text_color = #333
-color_red = #cc0000
+$path_pub = '../public'
+$background = #eee
 
-// background rgba(230,230,230,0.95)
-color_grey = rgb(225,225,225)
+image_width(img_url)
+  return image-size($path_pub + img_url)[0]
 
-// JuicedCSS grid responsive sizes (max-width: 1170px)
-// xs_grid_width = 360px
-// sm_grid_width = 480px
-// md_grid_width = 600px
-// lg_grid_width = 720px
-// xl_grid_width = 800px
-// hd_grid_width = 960px
+image_height(img_url)
+  return image-size($path_pub + img_url)[1]
+ 
+text_shadow(shadow_color, shadow_blur, shadow_power)
+  $cshadow = 0 0 shadow_blur shadow_color
+  $tshadow = $cshadow
+  for i in (1...shadow_power)
+    $tshadow = $tshadow, $cshadow
+  text-shadow $tshadow
 
-
-/*------------------------------*\
-  #HOST-VARIABLES/FUNCTIONS
-\*------------------------------*/
-
-
-path_pub = '../public'
-
-header_height = 54px
-footer_height = 28px
-
-// image_pricetag    = '/images/svg/price-tag.svg'
-// pricetag_height   = image_height(path_pub + image_pricetag)
-// pricetag_width    = image_width(path_pub + image_pricetag)
-
-image_width(img)
-  return image-size(img)[0]
-  
-image_height(img)
-  return image-size(img)[1]
 
 /*------------------------------*\
   #COMMON
@@ -51,12 +33,7 @@ body, html
   width 100%
   height 100%
   
-body
-  background-color #eee
-  // text-decoration none
-
-//   color text_color
-//   font-family "Roboto", "Open Sans", "lucida grande", "Segoe UI", arial, verdana, "lucida sans unicode", tahoma, sans-serif
+  // font-family "Roboto", "Open Sans", "lucida grande", "Segoe UI", arial, verdana, "lucida sans unicode", tahoma, sans-serif
 
 // IE fix for SVG images
 @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none)
@@ -65,123 +42,131 @@ body
 
  
 /*------------------------------*\
-  #HEADER
+  #PRICE-TAG
 \*------------------------------*/
 
-/* -------- Phone -------- */
-.phone
-  z-index 1
-  position absolute
-  top 28px
-  left 50%
-  right auto
-  bottom auto
-  padding-left 36px
-  font-family Roboto,sans-serif,Arial,Tahoma,Verdana
-  font-size 48px
-  font-weight bold
-  // color #333
-  $shadow_color = #fff
-  color #ee0405
-  text-shadow 0 0 6px $shadow_color, 0 0 8px $shadow_color, 0 0 16px $shadow_color, 0 0 24px $shadow_color, 0 0 28px $shadow_color, 0 0 32px $shadow_color
-  text-decoration none
+$price_tag_cw  = '/images/svg/price-tag-cw.svg'
+$price_tag_ccw = '/images/svg/price-tag-ccw.svg'
 
-/* -------- Price tag -------- */
-$price_width = 200px
+price_tag_resize(price_width, fix_pos = 0)
+  $img_width = image_width($price_tag_ccw)
+  $fix_pos = 0
+  if fix_pos < 0
+    $fix_pos = -(price_width + 16)
+
+  margin-left $fix_pos
+  width  price_width
+  height round(price_width * (image_height($price_tag_ccw) / $img_width))
 
 .price-tag
-  z-index 2
+  price_tag_resize(200px, -1)
+  z-index 9
   position fixed
   top   0
   left  50%
-  margin-left -(round($price_width * 1.1))
   cursor pointer
+  background-image url($price_tag_ccw)
+  background-repeat no-repeat
+  background-size contain
 
-.price-tag__svg
-  width $price_width
+
+/*------------------------------*\
+  #BANNER
+\*------------------------------*/
+
+$banner_size    = 320px
+$banner_padding = 12px
+$banner_image   = '/images/banner-welder.jpg'
+
+.banner
+  z-index 1
+  position absolute
+  top  50%
+  left @top
+  background $background
+
+.banner-is
+  background-color #fff
+  background-image url($banner_image)
+  background-repeat no-repeat
+  background-position bottom center
+  box-shadow 0 0 4px #bbb
+  cursor pointer
+    
+banner_resize(banner_size, banner_padding)
+  .banner
+    border-radius (banner_size / 2)
+    margin-top  -@border-radius
+    margin-left @margin-top
+    width  banner_size
+    height @width
+  
+  .banner-is
+    border-radius ((banner_size - banner_padding * 2) / 2)
+    width  (banner_size - banner_padding * 2)
+    height @width
+    margin banner_padding auto auto banner_padding
+    background-size (@width - round(@width * 0.0135))
+
+banner_resize($banner_size, $banner_padding)
+
+ 
+/*------------------------------*\
+  #BANNER-MOBILE
+\*------------------------------*/
+.banner-mobile
+  display none
+  width 100%
+  height 33.3333%
+  background-color #e2e2e2
+  background-image url(/images/banner-welder.mobile.jpg)
+  background-repeat no-repeat
+  background-position bottom center
+  background-size contain
+
+
+/*------------------------------*\
+  #PHONE
+\*------------------------------*/
+
+.phone
+  z-index 2
+  position fixed
+  top    24px
+  left   50%
+  padding-left 36px
+
+.phone-is
+  font-family Roboto,sans-serif,Arial,Tahoma,Verdana
+  font-size 48px
+  font-weight bolder
+  color #ee0405
+  text_shadow(#fff, 18px, 8)
+  text-decoration none
+
 
 /*------------------------------*\
   #GALLERY
 \*------------------------------*/
 
-$cell_padding  = 10px
-$title_padding = 20px
-
-.main-gallery
-  position absolute
-  top    $cell_padding
-  left   0
-  right  0
-  bottom 0
+.main
+  background-color $background
+  text-decoration none
 
 .gallery-title
-  $shadow_color = #fff
-  //color #cc0000
   color blue
-  text-shadow 0 0 6px $shadow_color, 0 0 8px $shadow_color, 0 0 10px $shadow_color, 0 0 12px $shadow_color, 0 0 16px $shadow_color
+  text_shadow(#fff, 10px, 6)
   font-size 48px
   font-weight bold
   font-family sans-serif,Arial,Tahoma,Verdana
   text-transform uppercase
-  padding-top 16px
-  padding-bottom @padding-top
-
-.gallery-link
-  cursor pointer
-
-/* -------- Modal -------- */
-.gallery-modal
-  z-index 9
-  display none
-  position fixed
-  top    0
-  bottom 0
-  left   0
-  right  0
-  opacity 0
-  padding 40px 10%
-  background rgba(0, 0, 0, 0.65)
-  transition opacity 1s
-
-.gallery-modal-is
-  position relative
-  width  100%
-  height 100%
-  background #eee
-  border-radius 4px
-  border 1px solid #ddd
-  text-align center
-
-$modal_text_height = 96px
-$modal_padding = 16px
-.modal-image
-  position absolute
-  top    $modal_padding
-  left   @top
-  right  @top
-  bottom ($modal_text_height + $modal_padding)
-  background-size cover
-  background-repeat no-repeat
-  background-position center center
-
-.modal-text
-  position absolute
-  top    auto
-  left   $modal_padding
-  right  @left
-  bottom @left
-  height $modal_text_height
-  color #000
-  font-size 40px
-
-.modal-image--alu
-  background-image url(/images/gallery-alu.jpg)
+  padding-bottom 16px
 
 /* -------- Container -------- */
-.gallery-box
+.gallery-item
   position relative
 
-.gallery-box-is
+.gallery-item-is
   position absolute
   border 1px solid #ccc
   border-radius 18px
@@ -189,104 +174,186 @@ $modal_padding = 16px
   background-repeat no-repeat
   background-position center center
 
-.gallery-box--tl
-  top    0
+$cell_padding = 10px
+/* -------- 1st row -------- */
+.gallery-item--tl, .gallery-item--tr
+  top    $cell_padding
   bottom ($cell_padding / 2)
+  text-align center
+
+.gallery-item--tl
   left   $cell_padding
   right  ($cell_padding / 2)
   background-image url(/images/gallery-alu.jpg)
-  padding-left $title_padding
-  text-align center
 
-.gallery-box--tr
-  top    0
-  bottom ($cell_padding / 2)
+.gallery-item--tr
   left   ($cell_padding / 2)
   right  $cell_padding
   background-image url(/images/gallery-chugun.jpg)
-  padding-right $title_padding
-  text-align center
 
-
-.gallery-box--bl
+/* -------- 2nd row -------- */
+.gallery-item--bl, .gallery-item--br
   top    ($cell_padding / 2)
   bottom $cell_padding
+
+.gallery-item--bl
   left   $cell_padding
   right  ($cell_padding / 2)
   background-image url(/images/gallery-ss.jpg)
-  padding-right $title_padding
+  padding-right 70px
   text-align right
 
-.gallery-box--br
-  top    ($cell_padding / 2)
-  bottom $cell_padding
+.gallery-item--br
   left   ($cell_padding / 2)
   right  $cell_padding
-  background-image url(/images/gallery-copper2.jpg)
-  padding-left $title_padding
+  background-image url(/images/gallery-copper.jpg)
+  padding-left 20px
   text-align left
-
-  
-/*------------------------------*\
-  #BANNER
-\*------------------------------*/
-
-$banner_size = 320px
-$banner_padding = 12px
-$banner_image = '/images/banner-welder.jpg'
-
-.banner
-  z-index 1
-  position absolute
-  top  50%
-  left @top
-  border-radius ($banner_size / 2)
-  margin-top  -@border-radius
-  margin-left @margin-top
-  width  $banner_size
-  height @width
-  background #fff
-
-.banner-is
-  border-radius (($banner_size - $banner_padding * 2) / 2)
-  width  ($banner_size - $banner_padding * 2)
-  height @width
-  margin $banner_padding auto auto $banner_padding
-  background-image url($banner_image)
-  background-repeat no-repeat
-  background-position center center
-  background-size cover
-  box-shadow 0 0 4px #999
-  cursor pointer
 
 
 /*------------------------------*\
   #RESPONSIVE
 \*------------------------------*/
 
-// @media screen and (max-width: 900px)
-//   .gallery-title
-//     font-size 42px
-//
+@media screen and (max-width: 1000px)
+  .gallery-item--tl
+    padding-right 50px
+
+  .gallery-item--tr
+    padding-left 50px
+
+@media screen and (max-width: 880px)
+  .gallery-item--tl
+    padding-right 80px
+
+  .gallery-item--tr
+    padding-left 80px
+
+@media screen and (max-width: 800px)
+  banner_resize(280px, 10px)
+
+  .price-tag
+    price_tag_resize(150px, -1)
+
+  .phone-is
+    font-size 38px
+
+@media screen and (max-width: 720px)
+  banner_resize(200px, 10px)
+
+  .price-tag
+    price_tag_resize(120px, -1)
+
+  .gallery-title
+    font-size 32px
+    padding-bottom 6px
+
+/* -------- Mobile view -------- */
+@media screen and (max-width: 600px)
+  .price-tag
+    top   8px
+    left  auto
+    right 6px
+    price_tag_resize(110px)
+    background-image url($price_tag_cw)
+
+  .phone
+    z-index 2
+    position fixed
+    top   33.3333%
+    right 0
+    left  0
+    margin -66px 0 0
+    padding 0
+    text-align center
+  .phone-is
+    color #000
+    font-size 64px
+    text_shadow(#fff, 20px, 8)
+    transition color 0.8s
+
+  .banner
+    display none
+  .banner-mobile
+    display block
+
+  .main
+    background-color #e2e2e2
+    position absolute
+    top    33.3333%
+    bottom 0
+    left   0
+    right  0
+    height auto
+
+  .gallery-title
+    font-size 32px
+    padding-bottom 4px
+  .gallery-item-is
+    border-radius 10px
+
+  $mob_padding = 4px
+  .gallery-item--tl
+    background-image url(/images/gallery-alu.mobile.jpg)
+    padding-right 0
+  .gallery-item--tr
+    background-image url(/images/gallery-chugun.mobile.jpg)
+    padding-left 0
+  .gallery-item--bl
+    background-image url(/images/gallery-ss.mobile.jpg)
+    padding-right 20px
+  .gallery-item--br
+    background-image url(/images/gallery-copper.mobile.jpg)
+
+  .gallery-item--tl,
+  .gallery-item--tr,
+  .gallery-item--bl,
+  .gallery-item--br
+    top $mob_padding
+  .gallery-item--tl,
+  .gallery-item--bl
+    left $mob_padding
+    right ($mob_padding / 2)
+  .gallery-item--tr,
+  .gallery-item--br
+    left ($mob_padding / 2)
+    right $mob_padding
+  .gallery-item--tl,
+  .gallery-item--tr
+    bottom 0
+  .gallery-item--bl,
+  .gallery-item--br
+    bottom $mob_padding
+
+@media screen and (max-width: 480px)
+  .phone
+    margin -54px 0 0
+  .phone-is
+    font-size 52px
+@media screen and (max-width: 360px)
+  .phone
+    margin -46px 0 0
+  .phone-is
+    font-size 46px
 
 
 /*------------------------------*\
   #ANIMATION
 \*------------------------------*/
 
-/* -------- Price tag -------- */
+/* -------- Price tag desktop -------- */
 @keyframes host-pulse
   from
     transform scale(1)
 
-  40%
+  30%
     transform scale(1.4)
 
   to
     transform scale(1)
 
 .animate-price
-  animation-duration 1.5s
+  animation-duration 1.1s
   animation-fill-mode both
   animation-name host-pulse
   animation-timing-function ease-in-out
@@ -296,7 +363,7 @@ $banner_image = '/images/banner-welder.jpg'
   from
     transform scale(1)
 
-  40%
+  20%
     transform scale(1.6)
 
   to
